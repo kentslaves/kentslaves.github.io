@@ -17,6 +17,7 @@ moving:
     rss: RSS
     facebook: test
     linkedin: test
+    bugcrowd: https://bugcrowd.com/kentslaves
 
 remote_theme: huangyz0918/moving
 plugins:
