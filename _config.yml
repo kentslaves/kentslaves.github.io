@@ -7,7 +7,7 @@ favicon: "./favicon.ico"
 
 moving:
   avatar_url: avatar.jpg
-  about_you: a short description about you. 
+  about_you: bug bounty hunter | penetration tester 
   date_format: "%b %d" 
   back_to: "Index"
 
