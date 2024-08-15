@@ -1,21 +1,30 @@
-title: Security Blogs
-author: Kent Bayron
-email: bayronkentoy@gmail.com 
-url: https://kentslaves.github.io
-description: Join me on my thrilling hacking adventures. Learn about my experiences and findings in the realm of cybersecurity, all shared for fun.
-favicon: "./favicon.ico"
+# Blog settings
+permalink: /blog/:categories/:title
 
-moving:
-  avatar_url: avatar.jpg
-  about_you: bug bounty hunter x penetration tester 
-  date_format: "%b %d" 
-  back_to: "Index"
 
-  social_links:
-    twitter: test
-    facebook: test
+# My variables
+name: Corb3nik - Writeups
+description: Corb3nik's personal blog - Infosec, CTFs and tools
+google_verification: null
 
-remote_theme: huangyz0918/moving
+
+# File management
+include: [".htaccess"]
+exclude: ["README.md", "LICENSE"]
+
+
+# Sass
+sass:
+  style: :compressed
+  sass_dir: _sass
+
+# Markdown
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# Plugins
 plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
+  - jemoji
