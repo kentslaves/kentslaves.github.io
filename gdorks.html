@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Links</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Search Links</h1>
+        <form id="searchForm" class="form-inline justify-content-center mb-4">
+            <input type="text" id="searchInput" class="form-control mr-2" placeholder="Enter search term" required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div id="linksContainer" class="list-group"></div>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const baseUrl = document.getElementById('searchInput').value.trim();
+            const searches = [
+                `https://github.com/search?q=%22${baseUrl}%22+npmrc%20_auth&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+dockercfg&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+pem%20private&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+id_rsa&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+aws_access_key_id&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+s3cfg&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+htpasswd&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+git-credentials&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+bashrc%20password&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+sshd_config&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+xoxp%20OR%20xoxb%20OR%20xoxa&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+SECRET_KEY&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+client_secret&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+sshd_config&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+github_token&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+api_key&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+FTP&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+app_secret&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+passwd&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+.env&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+.exs&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+beanstalkd.yml&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+deploy.rake&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+mysql&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+credentials&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+PWD&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+deploy.rake&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+.bash_history&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+.sls&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+secrets&type=Code`,
+                `https://github.com/search?q=%22${baseUrl}%22+composer.json&type=Code`,
+            ];
+            // Clear previous links
+            const linksContainer = document.getElementById('linksContainer');
+            linksContainer.innerHTML = '';
+            searches.forEach(url => {
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                link.textContent = url;
+                link.className = 'list-group-item list-group-item-action';
+                linksContainer.appendChild(link);
+            });
+        });
+    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
