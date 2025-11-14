@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Training Plan Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #374151; 
+            --color-accent: #f59e0b; 
+            --color-surface: #f9fafb;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-surface);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; 
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; 
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Chosen Palette: Earthy Trail Palette (Slate/Deep Blue #374151, Muted Orange/Ochre #f59e0b, Off-White Background #f9fafb) -->
+    <!-- Application Structure Plan: The SPA uses a single-page Dashboard approach. Key components include: 1. A global Week Selector dropdown (Sidebar). 2. A Summary Metrics section showing aggregated data (Total Hours, Quality Time, Rest Days) for the selected week. 3. A Trend Visualization area (Chart.js) showing the progression of volume across all 10 weeks. 4. A Detailed Schedule Table presenting the daily workout plan for the selected week. This structure was chosen because the source report is sequential and time-based; the dashboard allows users to jump instantly to any week (non-linear access) while maintaining context of the overall linear progression (via the chart). This provides optimal ease of exploration and synthesis. -->
+    <!-- Visualization & Content Choices: Summary Metrics (Report Info: Weekly Aggregates -> Goal: Quick assessment -> Viz/Presentation Method: Stat Cards (HTML/CSS/Tailwind) -> Interaction: Dynamic update on week change -> Justification: High-visibility KPIs -> Library/Method: HTML/JS). Weekly Progression (Report Info: Volume/Intensity across 10 weeks -> Goal: Show peaking/tapering trend -> Viz/Presentation Method: Combo Bar/Line Chart (Chart.js) -> Interaction: Highlight selected week -> Justification: Visualizes the crucial training load changes -> Library/Method: Chart.js/Canvas). Daily Schedule (Report Info: Daily Workout Details -> Goal: Specific task list -> Viz/Presentation Method: HTML Table -> Interaction: Dynamic update on week change -> Justification: Clearest way to present matrix data -> Library/Method: HTML/JS). CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <div class="bg-white shadow-xl">
+        <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center border-b border-gray-100">
+            <h1 class="text-3xl font-bold text-gray-800">Ultra Training Explorer</h1>
+            <div class="mt-4 md:mt-0 flex items-center">
+                <label for="week-selector" class="text-gray-600 mr-3 whitespace-nowrap">Explore Week:</label>
+                <select id="week-selector" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm text-gray-800">
+                </select>
+            </div>
+        </header>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Section 1: Weekly Summary Metrics -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Selected Week Summary</h2>
+            <p class="text-gray-600 mb-6">This section provides a quick, data-driven summary of the **active training week** selected above. It helps you assess the overall weekly load, the specific time dedicated to high-intensity training (quality focus), and the mandated rest days, ensuring alignment with the simplified, quality-first training philosophy.</p>
+            <div id="summary-metrics" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Metrics will be injected here -->
+            </div>
+        </section>
+
+        <!-- Section 2: Training Progression Visualization -->
+        <section class="mb-12 bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">10-Week Training Load Progression</h2>
+            <p class="text-gray-600 mb-6">This visualization charts the entire 10-week journey, illustrating the calculated **Total Weekly Hours** (line) and the **Quality Minutes** from your Threshold and Vertical sessions (bars). Notice the build-up toward the Week 7 peak and the sharp reduction during the taper (Weeks 8-10). The selected week is highlighted to provide immediate context within the overall plan.</p>
+            <div class="chart-container">
+                <canvas id="progressionChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 3: Detailed Weekly Schedule -->
+        <section>
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Detailed Daily Schedule</h2>
+            <p class="text-gray-600 mb-6">The table below breaks down the training plan for the selected week day-by-day. Note the strict adherence to the **Rest After Intensity** principle (Wednesday and Friday are mandatory rest days) and the integration of dedicated strength training (S) immediately following the quality running sessions.</p>
+            <div id="detailed-schedule-container" class="overflow-x-auto bg-white rounded-xl shadow-lg p-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Workout</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Focus/Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Schedule rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const TRAINING_DATA = {
+            1: { week: 1, dateRange: "Nov 10-16", totalHours: 7.5, qualityMinutes: 25, restDays: 3, phase: "Vertical and Strength Building", 
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 50 min (10 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Saturday", workout: "Long Trail Run (E) 3.5 hrs (500-800m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
+                    { day: "Sunday", workout: "Run (E) 75 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
+                ]
+            },
+            2: { week: 2, dateRange: "Nov 17-23", totalHours: 9.0, qualityMinutes: 30.5, restDays: 3, phase: "Vertical and Strength Building", 
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Tuesday", workout: "Run (T: 3 x 10 min) 50 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. Build leg endurance and power." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 60 min (12 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Saturday", workout: "Long Trail Run (E) 4.0 hrs (600-900m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
+                    { day: "Sunday", workout: "Run (E) 90 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
+                ]
+            },
+            3: { week: 3, dateRange: "Nov 24-30", totalHours: 11.0, qualityMinutes: 34.5, restDays: 3, phase: "Vertical and Strength Building",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 15 min) 60 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. Build leg endurance and power." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 90 min (8 x 45 sec Uphill Reps) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Saturday", workout: "Long Trail Run (E) 4.5 hrs (700-1000m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
+                    { day: "Sunday", workout: "Run (E) 105 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
+                ]
+            },
+            4: { week: 4, dateRange: "Dec 1-7", totalHours: 13.0, qualityMinutes: 49.5, restDays: 3, phase: "Specificity and Volume Peak",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Tuesday", workout: "Run (T: 3 x 15 min) 75 min + S (L/B) 30 min", notes: "Threshold Peak: Maximize time at threshold (T)." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (VF) 75 min (Downhill focus + 10 x 45 sec Uphill) + S (U/B) 30 min", notes: "Vertical Peak: Downhill/Eccentric loading is the primary goal." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Long Trail Run (E) 5.0 hrs (B2B Day 1)", notes: "Simulate Fatigue: Longest run block starts." },
+                    { day: "Sunday", workout: "Run (E) 2.0 hrs (B2B Day 2)", notes: "Shorter effort on tired legs." }
+                ]
+            },
+            5: { week: 5, dateRange: "Dec 8-14", totalHours: 8.0, qualityMinutes: 18, restDays: 3, phase: "Specificity and Volume Peak (Recovery)",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Tuesday", workout: "Run (E) 45 min + S (L/B) 15 min", notes: "Reduced volume threshold maintenance." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (VF) 60 min (gentle repeats: 6 x 30 sec Uphill) + S (U/B) 15 min", notes: "Reduced vertical volume." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Solo)", notes: "Medium run to maintain endurance." },
+                    { day: "Sunday", workout: "Run (E) 60 min", notes: "Light recovery run." }
+                ]
+            },
+            6: { week: 6, dateRange: "Dec 15-21", totalHours: 14.5, qualityMinutes: 44, restDays: 3, phase: "Specificity and Volume Peak",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 20 min) 75 min + S (L/B) 30 min", notes: "High volume threshold training." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (VF) 90 min (Downhill focus + 6 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Focus on downhill durability." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Long Trail Run (E) 6.0 hrs (B2B Day 1)", notes: "Major volume block." },
+                    { day: "Sunday", workout: "Run (E) 2.5 hrs (B2B Day 2)", notes: "Longer effort on tired legs." }
+                ]
+            },
+            7: { week: 7, dateRange: "Dec 22-28", totalHours: 16.0, qualityMinutes: 68, restDays: 3, phase: "Specificity and Volume Peak (Peak)",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Tuesday", workout: "Run (T: 3 x 20 min) 90 min + S (L/B) 30 min", notes: "Maximum threshold duration (60 mins total work)." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (VF) 105 min (Aggressive Descent + 8 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Maximum vertical and eccentric loading." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Long Trail Run (E) 7.0 hrs (B2B Day 1)", notes: "The ultimate long run." },
+                    { day: "Sunday", workout: "Run (E) 3.0 hrs (B2B Day 2)", notes: "Longest B2B recovery run." }
+                ]
+            },
+            8: { week: 8, dateRange: "Dec 29 - Jan 4", totalHours: 8.5, qualityMinutes: 34, restDays: 3, phase: "Pre-Taper and Taper",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 20 min", notes: "Maintain speed, start reducing strength volume." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (VF) 60 min (4 x 60 sec Uphill Reps) + S (U/B) 20 min", notes: "Maintain vertical power, reduce volume." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Last long effort)", notes: "Final medium-long run." },
+                    { day: "Sunday", workout: "Run (E) 45 min", notes: "Recovery." }
+                ]
+            },
+            9: { week: 9, dateRange: "Jan 5-11", totalHours: 2.5, qualityMinutes: 0, restDays: 4, phase: "Taper 1",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Full rest." },
+                    { day: "Tuesday", workout: "Run (E) 30 min (with 4 x 30 sec strides)", notes: "Short, sharp effort for leg turnover. No strength." },
+                    { day: "Wednesday", workout: "REST", notes: "" },
+                    { day: "Thursday", workout: "Run (E) 20 min (flat, smooth surface)", notes: "Light movement only." },
+                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Saturday", workout: "Rest", notes: "" },
+                    { day: "Sunday", workout: "Run (E) 20 min", notes: "Final small run of the taper." }
+                ]
+            },
+            10: { week: 10, dateRange: "Jan 12-18", totalHours: 1.0, qualityMinutes: 0, restDays: 6, phase: "Race Week",
+                schedule: [
+                    { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
+                    { day: "Tuesday", workout: "Run (E) 20 min (light shakeout)", notes: "Final light run." },
+                    { day: "Wednesday", workout: "REST", notes: "Logistics: Final gear check and drop bag prep." },
+                    { day: "Thursday", workout: "Rest", notes: "Final meal planning and visualization." },
+                    { day: "Friday", workout: "Run (E) 15 min (very light shakeout)", notes: "Pre-race meal." },
+                    { day: "Saturday", workout: "RACE DAY! (Jan 17th)", notes: "Execution Day! Trust your training." },
+                    { day: "Sunday", workout: "RECOVERY (Jan 18th)", notes: "Celebrate your adventure and rest fully." }
+                ]
+            }
+        };
+
+        let progressionChart;
+        let currentWeek = 1;
+
+        const weekSelector = document.getElementById('week-selector');
+        const summaryMetrics = document.getElementById('summary-metrics');
+        const scheduleBody = document.getElementById('schedule-body');
+
+        function setupWeekSelector() {
+            for (let i = 1; i <= 10; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Week ${i} (${TRAINING_DATA[i].dateRange})`;
+                weekSelector.appendChild(option);
+            }
+            weekSelector.value = currentWeek;
+            weekSelector.addEventListener('change', (e) => {
+                currentWeek = parseInt(e.target.value);
+                updateDashboard(currentWeek);
+            });
+        }
+
+        function calculateQuality(weekData) {
+            const runTime = (weekData.schedule.find(s => s.day === 'Tuesday').workout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
+            const vfTime = (weekData.schedule.find(s => s.day === 'Thursday').workout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
+            const strTime = (weekData.schedule.filter(s => s.workout.includes('S (L/B)') || s.workout.includes('S (U/B)')).map(s => parseInt((s.workout.match(/\d+ min/g) || ['0 min']).pop().split(' ')[0]))).reduce((a, b) => a + b, 0);
+            
+            return {
+                run: parseInt(runTime) || 0,
+                vf: parseInt(vfTime) || 0,
+                strength: strTime
+            };
+        }
+
+        function updateSummaryMetrics(weekNum) {
+            const data = TRAINING_DATA[weekNum];
+            const qualityData = calculateQuality(data);
+            
+            let totalRest = data.schedule.filter(s => s.day.includes('REST') || s.workout.includes('Rest')).length;
+            if (data.week === 10) totalRest = 6; 
+            
+            summaryMetrics.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-amber-500">
+                    <div class="text-3xl font-bold text-gray-800">${data.totalHours.toFixed(1)}</div>
+                    <div class="text-sm text-gray-500 uppercase mt-1 tracking-wider">Total Weekly Hours</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-slate-600">
+                    <div class="text-3xl font-bold text-gray-800">${data.qualityMinutes}</div>
+                    <div class="text-sm text-gray-500 uppercase mt-1 tracking-wider">Total Intensity Minutes</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-amber-500">
+                    <div class="text-3xl font-bold text-gray-800">${totalRest}</div>
+                    <div class="text-sm text-gray-500 uppercase mt-1 tracking-wider">Mandatory Rest Days</div>
+                </div>
+            `;
+        }
+
+        function updateScheduleTable(weekNum) {
+            const data = TRAINING_DATA[weekNum];
+            scheduleBody.innerHTML = '';
+
+            data.schedule.forEach(item => {
+                const date = new Date(data.dateRange.split('-')[0].trim() + " 2025");
+                const dayIndex = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].indexOf(item.day);
+                
+                let currentDay = new Date(date);
+                currentDay.setDate(date.getDate() + dayIndex);
+
+                let dateString = currentDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                
+                if (data.week >= 8) {
+                    const year = data.week === 10 ? '2026' : '2025/2026'; 
+                    currentDay = new Date(Date.UTC(2025, 10, 10)); // Base date for calculation
+                    currentDay.setDate(currentDay.getDate() + ((data.week - 1) * 7) + dayIndex);
+
+                    dateString = currentDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    if (currentDay.getFullYear() === 2026) {
+                        dateString = `${dateString}, '26`;
+                    }
+                }
+
+                const row = scheduleBody.insertRow();
+                row.className = item.workout.includes('REST') ? 'bg-amber-50 bg-opacity-70 text-gray-600' : 'hover:bg-gray-50 text-gray-800';
+
+                row.insertCell().textContent = item.day;
+                row.insertCell().textContent = dateString.replace(', 26', ''); // Clean up the date for the table view
+                row.insertCell().textContent = item.workout;
+                row.insertCell().textContent = item.notes;
+            });
+        }
+
+        function getChartData() {
+            const labels = [];
+            const totalHoursData = [];
+            const qualityMinutesData = [];
+            for (let i = 1; i <= 10; i++) {
+                labels.push(`Wk ${i}`);
+                totalHoursData.push(TRAINING_DATA[i].totalHours);
+                qualityMinutesData.push(TRAINING_DATA[i].qualityMinutes);
+            }
+            return { labels, totalHoursData, qualityMinutesData };
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('progressionChart').getContext('2d');
+            const data = getChartData();
+
+            progressionChart = new Chart(ctx, {
+                type: 'bar', 
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'Quality Minutes (Intensity)',
+                            data: data.qualityMinutesData,
+                            backgroundColor: 'rgba(55, 65, 81, 0.8)', 
+                            yAxisID: 'y1',
+                            order: 2,
+                            borderRadius: 4,
+                        },
+                        {
+                            label: 'Total Weekly Hours (Volume)',
+                            data: data.totalHoursData,
+                            borderColor: 'rgb(245, 158, 11)', 
+                            backgroundColor: 'rgba(245, 158, 11, 0.3)', 
+                            yAxisID: 'y',
+                            type: 'line',
+                            order: 1,
+                            tension: 0.3,
+                            fill: true,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.datasetIndex === 0 ? context.parsed.y + ' mins' : context.parsed.y + ' hrs';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            stacked: false,
+                        },
+                        y: { 
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Total Hours' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                        },
+                        y1: { 
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Quality Minutes' },
+                            grid: { drawOnChartArea: false } 
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart(weekNum) {
+            const chart = progressionChart;
+            
+            const totalHoursData = chart.data.datasets[1].data;
+            const qualityMinutesData = chart.data.datasets[0].data;
+
+            const totalHoursColors = totalHoursData.map((_, i) => i + 1 === weekNum ? 'rgb(245, 158, 11)' : 'rgba(245, 158, 11, 0.3)');
+            const qualityColors = qualityMinutesData.map((_, i) => i + 1 === weekNum ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.8)');
+
+            chart.data.datasets[0].backgroundColor = qualityColors;
+            chart.data.datasets[1].backgroundColor = totalHoursColors;
+            
+            chart.update();
+        }
+
+        function updateDashboard(weekNum) {
+            updateSummaryMetrics(weekNum);
+            updateScheduleTable(weekNum);
+            updateChart(weekNum);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupWeekSelector();
+            createChart();
+            updateDashboard(currentWeek); 
+        });
+
+    </script>
+</body>
+</html>
