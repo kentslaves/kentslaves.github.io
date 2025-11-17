@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiment 42KM Trail Training Plan</title>
+    <title>Ultra Training Plan Explorer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Chart.js Annotation Plugin for phase labels -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -31,16 +33,58 @@
                 height: 400px;
             }
         }
+
+        /* --- TOOLTIP STYLES FOR WORKOUT COLUMN --- */
+        .tooltip-container {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip-content {
+            visibility: hidden;
+            background-color: #374151; /* Primary color */
+            color: #f9fafb; /* Surface color */
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 100%; /* Position above the element */
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            min-width: 250px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            white-space: normal; /* Allow text wrapping in the tooltip */
+        }
+
+        /* Show the tooltip on hover */
+        .tooltip-container:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Tooltip Arrow */
+        .tooltip-content::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #374151 transparent transparent transparent;
+        }
+        /* --- END TOOLTIP STYLES --- */
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Chosen Palette: Earthy Trail Palette (Slate/Deep Blue #374151, Muted Orange/Ochre #f59e0b, Off-White Background #f9fafb) -->
-    <!-- Application Structure Plan: The SPA uses a single-page Dashboard approach. Key components include: 1. A global Week Selector dropdown (Sidebar). 2. A Summary Metrics section showing aggregated data (Total Hours, Quality Time, Rest Days) for the selected week. 3. A Trend Visualization area (Chart.js) showing the progression of volume across all 10 weeks. 4. A Detailed Schedule Table presenting the daily workout plan for the selected week. This structure was chosen because the source report is sequential and time-based; the dashboard allows users to jump instantly to any week (non-linear access) while maintaining context of the overall linear progression (via the chart). This provides optimal ease of exploration and synthesis. -->
-    <!-- Visualization & Content Choices: Summary Metrics (Report Info: Weekly Aggregates -> Goal: Quick assessment -> Viz/Presentation Method: Stat Cards (HTML/CSS/Tailwind) -> Interaction: Dynamic update on week change -> Justification: High-visibility KPIs -> Library/Method: HTML/JS). Weekly Progression (Report Info: Volume/Intensity across 10 weeks -> Goal: Show peaking/tapering trend -> Viz/Presentation Method: Combo Bar/Line Chart (Chart.js) -> Interaction: Highlight selected week -> Justification: Visualizes the crucial training load changes -> Library/Method: Chart.js/Canvas). Daily Schedule (Report Info: Daily Workout Details -> Goal: Specific task list -> Viz/Presentation Method: HTML Table -> Interaction: Dynamic update on week change -> Justification: Clearest way to present matrix data -> Library/Method: HTML/JS). CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <div class="bg-white shadow-xl">
         <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center border-b border-gray-100">
-            <h1 class="text-3xl font-bold text-gray-800">Experiment 42KM Trail Training Plan</h1>
+            <h1 class="text-3xl font-bold text-gray-800">Ultra Training Explorer</h1>
             <div class="mt-4 md:mt-0 flex items-center">
                 <label for="week-selector" class="text-gray-600 mr-3 whitespace-nowrap">Explore Week:</label>
                 <select id="week-selector" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm text-gray-800">
@@ -63,7 +107,7 @@
         <!-- Section 2: Training Progression Visualization -->
         <section class="mb-12 bg-white p-6 rounded-xl shadow-lg">
             <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">10-Week Training Load Progression</h2>
-            <p class="text-gray-600 mb-6">This visualization charts the entire 10-week journey, illustrating the calculated **Total Weekly Hours** (line) and the **Quality Minutes** from your Threshold and Vertical sessions (bars). Notice the build-up toward the Week 7 peak and the sharp reduction during the taper (Weeks 8-10). The selected week is highlighted to provide immediate context within the overall plan.</p>
+            <p class="text-gray-600 mb-6">This visualization charts the entire 10-week journey, illustrating the calculated **Total Weekly Hours** (line) and the **Quality Minutes** from your Threshold and Vertical sessions (bars). Note how the **bars disappear entirely during the final Taper weeks (9-10)**, as intensity drops to zero, a crucial element of race preparation. The selected week is highlighted to provide immediate context within the overall plan.</p>
             <div class="chart-container">
                 <canvas id="progressionChart"></canvas>
             </div>
@@ -72,15 +116,21 @@
         <!-- Section 3: Detailed Weekly Schedule -->
         <section>
             <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Detailed Daily Schedule</h2>
-            <p class="text-gray-600 mb-6">The table below breaks down the training plan for the selected week day-by-day. Note the strict adherence to the **Rest After Intensity** principle (Wednesday and Friday are mandatory rest days) and the integration of dedicated strength training (S) immediately following the quality running sessions.</p>
+            <p class="text-gray-600 mb-4">The table below breaks down the training plan for the selected week. Hover over the **Workout** entry to see the specific focus and notes. Key abbreviations are:</p>
+            <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-700 mb-6 pl-4 list-disc list-inside">
+                <li><span class="font-bold text-amber-600">E</span>: Easy Pace / Endurance</li>
+                <li><span class="font-bold text-amber-600">T</span>: Threshold Pace / Intervals</li>
+                <li><span class="font-bold text-amber-600">VF</span>: Vertical Focus (Uphill/Downhill Power)</li>
+                <li><span class="font-bold text-amber-600">S</span>: Strength Training</li>
+                <li><span class="font-bold text-amber-600">B2B</span>: Back-to-Back Running Days</li>
+            </ul>
             <div id="detailed-schedule-container" class="overflow-x-auto bg-white rounded-xl shadow-lg p-4">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Workout</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Focus/Notes</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Workout (Hover for Notes)</th>
                         </tr>
                     </thead>
                     <tbody id="schedule-body" class="bg-white divide-y divide-gray-200">
@@ -97,10 +147,10 @@
             1: { week: 1, dateRange: "Nov 10-16", totalHours: 7.5, qualityMinutes: 25, restDays: 3, phase: "Vertical and Strength Building", 
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery day." },
-                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace." },
-                    { day: "Wednesday", workout: "Rest", notes: "Mandatory rest day after Tuesday's intensity." },
-                    { day: "Thursday", workout: "Run (VF) 50 min (10 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
-                    { day: "Friday", workout: "Rest", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 50 min (10 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.5 hrs (500-800m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 75 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
@@ -108,10 +158,10 @@
             2: { week: 2, dateRange: "Nov 17-23", totalHours: 9.0, qualityMinutes: 30.5, restDays: 3, phase: "Vertical and Strength Building", 
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery day." },
-                    { day: "Tuesday", workout: "Run (T: 3 x 10 min) 50 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. Build leg endurance and power." },
-                    { day: "Wednesday", workout: "Rest", notes: "Mandatory rest day after Tuesday's intensity." },
-                    { day: "Thursday", workout: "Run (VF) 60 min (12 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
-                    { day: "Friday", workout: "Rest", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Tuesday", workout: "Run (T: 3 x 10 min) 50 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core. Build leg endurance and power." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 60 min (12 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 4.0 hrs (600-900m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 90 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
@@ -119,10 +169,10 @@
             3: { week: 3, dateRange: "Nov 24-30", totalHours: 11.0, qualityMinutes: 34.5, restDays: 3, phase: "Vertical and Strength Building",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery day." },
-                    { day: "Tuesday", workout: "Run (T: 2 x 15 min) 60 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. Build leg endurance and power." },
-                    { day: "Wednesday", workout: "Rest", notes: "Mandatory rest day after Tuesday's intensity." },
-                    { day: "Thursday", workout: "Run (VF) 90 min (8 x 45 sec Uphill Reps) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on core and stability." },
-                    { day: "Friday", workout: "Rest", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Tuesday", workout: "Run (T: 2 x 15 min) 60 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core. Build leg endurance and power." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Thursday", workout: "Run (VF) 90 min (8 x 45 sec Uphill Reps) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 4.5 hrs (700-1000m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 105 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
@@ -130,10 +180,10 @@
             4: { week: 4, dateRange: "Dec 1-7", totalHours: 13.0, qualityMinutes: 49.5, restDays: 3, phase: "Specificity and Volume Peak",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery." },
-                    { day: "Tuesday", workout: "Run (T: 3 x 15 min) 75 min + S (L/B) 30 min", notes: "Threshold Peak: Maximize time at threshold (T)." },
-                    { day: "Wednesday", workout: "Rest", notes: "" },
-                    { day: "Thursday", workout: "Run (VF) 75 min (Downhill focus + 10 x 45 sec Uphill) + S (U/B) 30 min", notes: "Vertical Peak: Downhill/Eccentric loading is the primary goal." },
-                    { day: "Friday", workout: "Rest", notes: "" },
+                    { day: "Tuesday", workout: "Run (T: 3 x 15 min) 75 min + S (L/B) 30 min", notes: "Threshold Peak: Maximize time at threshold (T). S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Thursday", workout: "Run (VF) 75 min (Downhill focus + 10 x 45 sec Uphill) + S (U/B) 30 min", notes: "Vertical Peak: Downhill/Eccentric loading is the primary goal. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 5.0 hrs (B2B Day 1)", notes: "Simulate Fatigue: Longest run block starts." },
                     { day: "Sunday", workout: "Run (E) 2.0 hrs (B2B Day 2)", notes: "Shorter effort on tired legs." }
                 ]
@@ -141,10 +191,10 @@
             5: { week: 5, dateRange: "Dec 8-14", totalHours: 8.0, qualityMinutes: 18, restDays: 3, phase: "Specificity and Volume Peak (Recovery)",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery." },
-                    { day: "Tuesday", workout: "Run (E) 45 min + S (L/B) 15 min", notes: "Reduced volume threshold maintenance." },
-                    { day: "Wednesday", workout: "REST", notes: "" },
-                    { day: "Thursday", workout: "Run (VF) 60 min (gentle repeats: 6 x 30 sec Uphill) + S (U/B) 15 min", notes: "Reduced vertical volume." },
-                    { day: "Friday", workout: "REST", notes: "" },
+                    { day: "Tuesday", workout: "Run (E) 45 min + S (L/B) 15 min", notes: "Reduced volume threshold maintenance. S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Thursday", workout: "Run (VF) 60 min (gentle repeats: 6 x 30 sec Uphill) + S (U/B) 15 min", notes: "Reduced vertical volume. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Solo)", notes: "Medium run to maintain endurance." },
                     { day: "Sunday", workout: "Run (E) 60 min", notes: "Light recovery run." }
                 ]
@@ -152,10 +202,10 @@
             6: { week: 6, dateRange: "Dec 15-21", totalHours: 14.5, qualityMinutes: 44, restDays: 3, phase: "Specificity and Volume Peak",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery." },
-                    { day: "Tuesday", workout: "Run (T: 2 x 20 min) 75 min + S (L/B) 30 min", notes: "High volume threshold training." },
-                    { day: "Wednesday", workout: "Rest", notes: "" },
-                    { day: "Thursday", workout: "Run (VF) 90 min (Downhill focus + 6 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Focus on downhill durability." },
-                    { day: "Friday", workout: "Rest", notes: "" },
+                    { day: "Tuesday", workout: "Run (T: 2 x 20 min) 75 min + S (L/B) 30 min", notes: "High volume threshold training. S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Thursday", workout: "Run (VF) 90 min (Downhill focus + 6 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Focus on downhill durability. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 6.0 hrs (B2B Day 1)", notes: "Major volume block." },
                     { day: "Sunday", workout: "Run (E) 2.5 hrs (B2B Day 2)", notes: "Longer effort on tired legs." }
                 ]
@@ -163,10 +213,10 @@
             7: { week: 7, dateRange: "Dec 22-28", totalHours: 16.0, qualityMinutes: 68, restDays: 3, phase: "Specificity and Volume Peak (Peak)",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full recovery." },
-                    { day: "Tuesday", workout: "Run (T: 3 x 20 min) 90 min + S (L/B) 30 min", notes: "Maximum threshold duration (60 mins total work)." },
-                    { day: "Wednesday", workout: "Rest", notes: "" },
-                    { day: "Thursday", workout: "Run (VF) 105 min (Aggressive Descent + 8 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Maximum vertical and eccentric loading." },
-                    { day: "Friday", workout: "Rest", notes: "" },
+                    { day: "Tuesday", workout: "Run (T: 3 x 20 min) 90 min + S (L/B) 30 min", notes: "Maximum threshold duration (60 mins total work). S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Thursday", workout: "Run (VF) 105 min (Aggressive Descent + 8 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Maximum vertical and eccentric loading. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 7.0 hrs (B2B Day 1)", notes: "The ultimate long run." },
                     { day: "Sunday", workout: "Run (E) 3.0 hrs (B2B Day 2)", notes: "Longest B2B recovery run." }
                 ]
@@ -174,10 +224,10 @@
             8: { week: 8, dateRange: "Dec 29 - Jan 4", totalHours: 8.5, qualityMinutes: 34, restDays: 3, phase: "Pre-Taper and Taper",
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
-                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 20 min", notes: "Maintain speed, start reducing strength volume." },
-                    { day: "Wednesday", workout: "Rest", notes: "" },
-                    { day: "Thursday", workout: "Run (VF) 60 min (4 x 60 sec Uphill Reps) + S (U/B) 20 min", notes: "Maintain vertical power, reduce volume." },
-                    { day: "Friday", workout: "Rest", notes: "" },
+                    { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 20 min", notes: "Maintain speed, start reducing strength volume. S (L/B) focuses on Lower Body and Core." },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Thursday", workout: "Run (VF) 60 min (4 x 60 sec Uphill Reps) + S (U/B) 20 min", notes: "Maintain vertical power, reduce volume. S (U/B) focuses on Upper Body and Core stability." },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Last long effort)", notes: "Final medium-long run." },
                     { day: "Sunday", workout: "Run (E) 45 min", notes: "Recovery." }
                 ]
@@ -186,10 +236,10 @@
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Full rest." },
                     { day: "Tuesday", workout: "Run (E) 30 min (with 4 x 30 sec strides)", notes: "Short, sharp effort for leg turnover. No strength." },
-                    { day: "Wednesday", workout: "Rest", notes: "" },
+                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
                     { day: "Thursday", workout: "Run (E) 20 min (flat, smooth surface)", notes: "Light movement only." },
-                    { day: "Friday", workout: "Rest", notes: "" },
-                    { day: "Saturday", workout: "Rest", notes: "" },
+                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Saturday", workout: "Rest", notes: "Full rest." },
                     { day: "Sunday", workout: "Run (E) 20 min", notes: "Final small run of the taper." }
                 ]
             },
@@ -197,7 +247,7 @@
                 schedule: [
                     { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
                     { day: "Tuesday", workout: "Run (E) 20 min (light shakeout)", notes: "Final light run." },
-                    { day: "Wednesday", workout: "Rest", notes: "Logistics: Final gear check and drop bag prep." },
+                    { day: "Wednesday", workout: "REST", notes: "Logistics: Final gear check and drop bag prep." },
                     { day: "Thursday", workout: "Rest", notes: "Final meal planning and visualization." },
                     { day: "Friday", workout: "Run (E) 15 min (very light shakeout)", notes: "Pre-race meal." },
                     { day: "Saturday", workout: "RACE DAY! (Jan 17th)", notes: "Execution Day! Trust your training." },
@@ -228,9 +278,20 @@
         }
 
         function calculateQuality(weekData) {
-            const runTime = (weekData.schedule.find(s => s.day === 'Tuesday').workout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
-            const vfTime = (weekData.schedule.find(s => s.day === 'Thursday').workout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
-            const strTime = (weekData.schedule.filter(s => s.workout.includes('S (L/B)') || s.workout.includes('S (U/B)')).map(s => parseInt((s.workout.match(/\d+ min/g) || ['0 min']).pop().split(' ')[0]))).reduce((a, b) => a + b, 0);
+            // This function calculates total time spent on Quality/Strength work.
+            if (weekData.qualityMinutes === 0) return { run: 0, vf: 0, strength: 0 };
+
+            const tuesdayWorkout = weekData.schedule.find(s => s.day === 'Tuesday').workout;
+            const thursdayWorkout = weekData.schedule.find(s => s.day === 'Thursday').workout;
+
+            const runTime = (tuesdayWorkout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
+            const vfTime = (thursdayWorkout.match(/\d+ min/) || ['0 min'])[0].split(' ')[0];
+            
+            // Extract strength time from workouts that include 'S ('
+            const strTime = weekData.schedule
+                .filter(s => s.workout.includes('S (') && s.workout.match(/\d+ min/g))
+                .map(s => parseInt((s.workout.match(/\d+ min/g) || ['0 min']).pop().split(' ')[0]))
+                .reduce((a, b) => a + b, 0);
             
             return {
                 run: parseInt(runTime) || 0,
@@ -241,7 +302,6 @@
 
         function updateSummaryMetrics(weekNum) {
             const data = TRAINING_DATA[weekNum];
-            const qualityData = calculateQuality(data);
             
             let totalRest = data.schedule.filter(s => s.day.includes('REST') || s.workout.includes('Rest')).length;
             if (data.week === 10) totalRest = 6; 
@@ -267,6 +327,7 @@
             scheduleBody.innerHTML = '';
 
             data.schedule.forEach(item => {
+                // Determine the correct date for the week and day (date calculation logic from previous versions)
                 const date = new Date(data.dateRange.split('-')[0].trim() + " 2025");
                 const dayIndex = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].indexOf(item.day);
                 
@@ -276,23 +337,27 @@
                 let dateString = currentDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 
                 if (data.week >= 8) {
-                    const year = data.week === 10 ? '2026' : '2025/2026'; 
-                    currentDay = new Date(Date.UTC(2025, 10, 10)); // Base date for calculation
+                    currentDay = new Date(Date.UTC(2025, 10, 10)); // Base date for calculation (Nov 10, 2025)
                     currentDay.setDate(currentDay.getDate() + ((data.week - 1) * 7) + dayIndex);
 
                     dateString = currentDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    if (currentDay.getFullYear() === 2026) {
-                        dateString = `${dateString}, '26`;
-                    }
                 }
 
                 const row = scheduleBody.insertRow();
-                row.className = item.workout.includes('REST') ? 'bg-amber-50 bg-opacity-70 text-gray-600' : 'hover:bg-gray-50 text-gray-800';
+                row.className = item.workout.includes('REST') || item.workout.includes('Rest') ? 'bg-amber-50 bg-opacity-70 text-gray-600' : 'hover:bg-gray-50 text-gray-800';
 
+                // Day column
                 row.insertCell().textContent = item.day;
-                row.insertCell().textContent = dateString.replace(', 26', ''); // Clean up the date for the table view
-                row.insertCell().textContent = item.workout;
-                row.insertCell().textContent = item.notes;
+                // Date column
+                row.insertCell().textContent = dateString;
+                
+                // Workout (Tooltip Container) Column
+                const workoutCell = row.insertCell();
+                workoutCell.className = 'tooltip-container px-6 py-4 whitespace-nowrap text-sm font-medium';
+                workoutCell.innerHTML = `
+                    ${item.workout}
+                    <span class="tooltip-content">${item.notes}</span>
+                `;
             });
         }
 
@@ -303,7 +368,8 @@
             for (let i = 1; i <= 10; i++) {
                 labels.push(`Wk ${i}`);
                 totalHoursData.push(TRAINING_DATA[i].totalHours);
-                qualityMinutesData.push(TRAINING_DATA[i].qualityMinutes);
+                // The bar represents qualityMinutes, which is intentionally 0 for taper weeks (9 & 10)
+                qualityMinutesData.push(TRAINING_DATA[i].qualityMinutes); 
             }
             return { labels, totalHoursData, qualityMinutesData };
         }
@@ -329,7 +395,7 @@
                             label: 'Total Weekly Hours (Volume)',
                             data: data.totalHoursData,
                             borderColor: 'rgb(245, 158, 11)', 
-                            backgroundColor: 'rgba(245, 158, 11, 0.3)', 
+                            backgroundColor: 'rgba(245, 158, 11, 0.3)', // This is the default transparent fill color
                             yAxisID: 'y',
                             type: 'line',
                             order: 1,
@@ -337,6 +403,8 @@
                             fill: true,
                             pointRadius: 5,
                             pointHoverRadius: 7,
+                            pointBorderColor: 'transparent', // Set default point colors
+                            pointBackgroundColor: 'rgba(245, 158, 11, 0.3)', // Default transparent point color
                         }
                     ]
                 },
@@ -366,6 +434,67 @@
                                     }
                                     return label;
                                 }
+                            }
+                        },
+                        // Annotation Configuration for Training Phases
+                        annotation: {
+                            annotations: {
+                                // Phase I Label: Base Build (Wks 1-3)
+                                labelPhase1: {
+                                    type: 'label',
+                                    content: 'Base Build',
+                                    xValue: 1, // X-axis index 1 (Week 2)
+                                    yValue: 'end', // Position near the top
+                                    yAdjust: -15, // Offset from top
+                                    font: { size: 14, weight: 'bold' },
+                                    color: '#374151',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                    borderWidth: 0,
+                                },
+                                // Separator Line 1 (After Wk 3 / Index 2)
+                                lineSeparator1: {
+                                    type: 'line',
+                                    mode: 'vertical',
+                                    scaleID: 'x',
+                                    value: 2.5, // Between index 2 (Wk 3) and index 3 (Wk 4)
+                                    borderColor: 'rgba(55, 65, 81, 0.5)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                },
+                                // Phase II Label: Volume Peak (Wks 4-7)
+                                labelPhase2: {
+                                    type: 'label',
+                                    content: 'Volume Peak',
+                                    xValue: 5, // X-axis index 5 (Week 6)
+                                    yValue: 'end',
+                                    yAdjust: -15,
+                                    font: { size: 14, weight: 'bold' },
+                                    color: '#374151',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                    borderWidth: 0,
+                                },
+                                // Separator Line 2 (After Wk 7 / Index 6)
+                                lineSeparator2: {
+                                    type: 'line',
+                                    mode: 'vertical',
+                                    scaleID: 'x',
+                                    value: 6.5, // Between index 6 (Wk 7) and index 7 (Wk 8)
+                                    borderColor: 'rgba(55, 65, 81, 0.5)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                },
+                                // Phase III Label: Taper and Race (Wks 8-10)
+                                labelPhase3: {
+                                    type: 'label',
+                                    content: 'Taper',
+                                    xValue: 8.5, // X-axis index 8.5 (Middle of Wk 9)
+                                    yValue: 'end',
+                                    yAdjust: -15,
+                                    font: { size: 14, weight: 'bold' },
+                                    color: '#374151',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                    borderWidth: 0,
+                                },
                             }
                         }
                     },
@@ -399,12 +528,22 @@
             const totalHoursData = chart.data.datasets[1].data;
             const qualityMinutesData = chart.data.datasets[0].data;
 
-            const totalHoursColors = totalHoursData.map((_, i) => i + 1 === weekNum ? 'rgb(245, 158, 11)' : 'rgba(245, 158, 11, 0.3)');
+            // 1. Calculate Quality Bar Colors (Dark Slate/Blue)
+            // Highlight the selected bar with full opacity, others with 0.8 opacity
             const qualityColors = qualityMinutesData.map((_, i) => i + 1 === weekNum ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.8)');
-
             chart.data.datasets[0].backgroundColor = qualityColors;
-            chart.data.datasets[1].backgroundColor = totalHoursColors;
             
+            // 2. Calculate Volume Line Point Colors (Amber/Orange)
+            // Highlight the selected point with a solid color, others with the transparent color
+            const pointHighlightColors = totalHoursData.map((_, i) => 
+                i + 1 === weekNum ? 'rgb(245, 158, 11)' : 'rgba(245, 158, 11, 0.3)'
+            );
+
+            // FIX: We must set pointBackgroundColor and pointBorderColor to the array for highlighting.
+            // We do NOT set the main 'backgroundColor' (which defines the area fill) to the array.
+            chart.data.datasets[1].pointBackgroundColor = pointHighlightColors;
+            chart.data.datasets[1].pointBorderColor = pointHighlightColors; 
+
             chart.update();
         }
 
