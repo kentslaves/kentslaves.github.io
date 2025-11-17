@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Training Plan Explorer</title>
+    <title>Expirement 50KM Ultra Training Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <!-- Chart.js Annotation Plugin for phase labels -->
@@ -84,7 +84,7 @@
 
     <div class="bg-white shadow-xl">
         <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center border-b border-gray-100">
-            <h1 class="text-3xl font-bold text-gray-800">Ultra Training Explorer</h1>
+            <h1 class="text-3xl font-bold text-gray-800">Expirement 50KM Ultra Training Plan</h1>
             <div class="mt-4 md:mt-0 flex items-center">
                 <label for="week-selector" class="text-gray-600 mr-3 whitespace-nowrap">Explore Week:</label>
                 <select id="week-selector" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm text-gray-800">
@@ -98,7 +98,7 @@
         <!-- Section 1: Weekly Summary Metrics -->
         <section class="mb-8">
             <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Selected Week Summary</h2>
-            <p class="text-gray-600 mb-6">This section provides a quick, data-driven summary of the **active training week** selected above. It helps you assess the overall weekly load, the specific time dedicated to high-intensity training (quality focus), and the mandated rest days, ensuring alignment with the simplified, quality-first training philosophy.</p>
+            <p class="text-gray-600 mb-6">This section provides a quick, data-driven summary of the Active Training Week selected above. It helps you assess the overall weekly load, the specific time dedicated to high-intensity training (quality focus), and the mandated rest days, ensuring alignment with the simplified, quality-first training philosophy.</p>
             <div id="summary-metrics" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Metrics will be injected here -->
             </div>
@@ -107,7 +107,7 @@
         <!-- Section 2: Training Progression Visualization -->
         <section class="mb-12 bg-white p-6 rounded-xl shadow-lg">
             <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">10-Week Training Load Progression</h2>
-            <p class="text-gray-600 mb-6">This visualization charts the entire 10-week journey, illustrating the calculated **Total Weekly Hours** (line) and the **Quality Minutes** from your Threshold and Vertical sessions (bars). Note how the **bars disappear entirely during the final Taper weeks (9-10)**, as intensity drops to zero, a crucial element of race preparation. The selected week is highlighted to provide immediate context within the overall plan.</p>
+            <p class="text-gray-600 mb-6">This visualization charts the entire 10-week journey, illustrating the calculated Total Weekly Hours (line) and the Quality Minutes from your Threshold and Vertical sessions (bars). Note how the **bars disappear entirely during the final Taper weeks (9-10)**, as intensity drops to zero, a crucial element of race preparation. The selected week is highlighted to provide immediate context within the overall plan.</p>
             <div class="chart-container">
                 <canvas id="progressionChart"></canvas>
             </div>
@@ -142,113 +142,119 @@
 
     </main>
 
+    <footer class="mt-12 py-4 border-t border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            vibe code with Gemini by Kent
+        </div>
+    </footer>
+
     <script>
         const TRAINING_DATA = {
             1: { week: 1, dateRange: "Nov 10-16", totalHours: 7.5, qualityMinutes: 25, restDays: 3, phase: "Vertical and Strength Building", 
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest day." },
                     { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Tuesday's intensity." },
                     { day: "Thursday", workout: "Run (VF) 50 min (10 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.5 hrs (500-800m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 75 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
             },
             2: { week: 2, dateRange: "Nov 17-23", totalHours: 9.0, qualityMinutes: 30.5, restDays: 3, phase: "Vertical and Strength Building", 
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest day." },
                     { day: "Tuesday", workout: "Run (T: 3 x 10 min) 50 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core. Build leg endurance and power." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Tuesday's intensity." },
                     { day: "Thursday", workout: "Run (VF) 60 min (12 x 30 sec Uphill Sprints) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 4.0 hrs (600-900m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 90 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
             },
             3: { week: 3, dateRange: "Nov 24-30", totalHours: 11.0, qualityMinutes: 34.5, restDays: 3, phase: "Vertical and Strength Building",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery day." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest day." },
                     { day: "Tuesday", workout: "Run (T: 2 x 15 min) 60 min + S (L/B) 30 min", notes: "Quality Run 1: Sustained threshold pace. S (L/B) focuses on Lower Body and Core. Build leg endurance and power." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest day after Tuesday's intensity." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Tuesday's intensity." },
                     { day: "Thursday", workout: "Run (VF) 90 min (8 x 45 sec Uphill Reps) + S (U/B) 30 min", notes: "Quality Run 2: Vertical power focus. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest day after Thursday's intensity to prep for volume." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest day after Thursday's intensity to prep for volume." },
                     { day: "Saturday", workout: "Long Trail Run (E) 4.5 hrs (700-1000m vert)", notes: "Volume Block Day 1: The long run. Practice nutrition and terrain specificity." },
                     { day: "Sunday", workout: "Run (E) 105 min (Recovery B2B)", notes: "Volume Block Day 2: Shorter, easier run on tired legs to simulate ultra fatigue." }
                 ]
             },
             4: { week: 4, dateRange: "Dec 1-7", totalHours: 13.0, qualityMinutes: 49.5, restDays: 3, phase: "Specificity and Volume Peak",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Tuesday", workout: "Run (T: 3 x 15 min) 75 min + S (L/B) 30 min", notes: "Threshold Peak: Maximize time at threshold (T). S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (VF) 75 min (Downhill focus + 10 x 45 sec Uphill) + S (U/B) 30 min", notes: "Vertical Peak: Downhill/Eccentric loading is the primary goal. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 5.0 hrs (B2B Day 1)", notes: "Simulate Fatigue: Longest run block starts." },
                     { day: "Sunday", workout: "Run (E) 2.0 hrs (B2B Day 2)", notes: "Shorter effort on tired legs." }
                 ]
             },
             5: { week: 5, dateRange: "Dec 8-14", totalHours: 8.0, qualityMinutes: 18, restDays: 3, phase: "Specificity and Volume Peak (Recovery)",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Tuesday", workout: "Run (E) 45 min + S (L/B) 15 min", notes: "Reduced volume threshold maintenance. S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (VF) 60 min (gentle repeats: 6 x 30 sec Uphill) + S (U/B) 15 min", notes: "Reduced vertical volume. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Solo)", notes: "Medium run to maintain endurance." },
                     { day: "Sunday", workout: "Run (E) 60 min", notes: "Light recovery run." }
                 ]
             },
             6: { week: 6, dateRange: "Dec 15-21", totalHours: 14.5, qualityMinutes: 44, restDays: 3, phase: "Specificity and Volume Peak",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Tuesday", workout: "Run (T: 2 x 20 min) 75 min + S (L/B) 30 min", notes: "High volume threshold training. S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (VF) 90 min (Downhill focus + 6 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Focus on downhill durability. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 6.0 hrs (B2B Day 1)", notes: "Major volume block." },
                     { day: "Sunday", workout: "Run (E) 2.5 hrs (B2B Day 2)", notes: "Longer effort on tired legs." }
                 ]
             },
             7: { week: 7, dateRange: "Dec 22-28", totalHours: 16.0, qualityMinutes: 68, restDays: 3, phase: "Specificity and Volume Peak (Peak)",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full recovery." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Tuesday", workout: "Run (T: 3 x 20 min) 90 min + S (L/B) 30 min", notes: "Maximum threshold duration (60 mins total work). S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (VF) 105 min (Aggressive Descent + 8 x 60 sec Uphill Reps) + S (U/B) 30 min", notes: "Maximum vertical and eccentric loading. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 7.0 hrs (B2B Day 1)", notes: "The ultimate long run." },
                     { day: "Sunday", workout: "Run (E) 3.0 hrs (B2B Day 2)", notes: "Longest B2B recovery run." }
                 ]
             },
             8: { week: 8, dateRange: "Dec 29 - Jan 4", totalHours: 8.5, qualityMinutes: 34, restDays: 3, phase: "Pre-Taper and Taper",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Active Recovery Rest: Focus on hydration and sleep." },
                     { day: "Tuesday", workout: "Run (T: 2 x 10 min) 45 min + S (L/B) 20 min", notes: "Maintain speed, start reducing strength volume. S (L/B) focuses on Lower Body and Core." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (VF) 60 min (4 x 60 sec Uphill Reps) + S (U/B) 20 min", notes: "Maintain vertical power, reduce volume. S (U/B) focuses on Upper Body and Core stability." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Saturday", workout: "Long Trail Run (E) 3.0 hrs (Last long effort)", notes: "Final medium-long run." },
                     { day: "Sunday", workout: "Run (E) 45 min", notes: "Recovery." }
                 ]
             },
             9: { week: 9, dateRange: "Jan 5-11", totalHours: 2.5, qualityMinutes: 0, restDays: 4, phase: "Taper 1",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Full rest." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Tuesday", workout: "Run (E) 30 min (with 4 x 30 sec strides)", notes: "Short, sharp effort for leg turnover. No strength." },
-                    { day: "Wednesday", workout: "REST", notes: "Mandatory rest." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
                     { day: "Thursday", workout: "Run (E) 20 min (flat, smooth surface)", notes: "Light movement only." },
-                    { day: "Friday", workout: "REST", notes: "Mandatory rest." },
-                    { day: "Saturday", workout: "Rest", notes: "Full rest." },
+                    { day: "Friday", workout: "Active Recovery Rest", notes: "Mandatory Active Recovery Rest." },
+                    { day: "Saturday", workout: "Active Recovery Rest", notes: "Full Active Recovery Rest." },
                     { day: "Sunday", workout: "Run (E) 20 min", notes: "Final small run of the taper." }
                 ]
             },
             10: { week: 10, dateRange: "Jan 12-18", totalHours: 1.0, qualityMinutes: 0, restDays: 6, phase: "Race Week",
                 schedule: [
-                    { day: "Monday", workout: "Rest", notes: "Focus on hydration and sleep." },
+                    { day: "Monday", workout: "Active Recovery Rest", notes: "Active Recovery Rest: Focus on hydration and sleep." },
                     { day: "Tuesday", workout: "Run (E) 20 min (light shakeout)", notes: "Final light run." },
-                    { day: "Wednesday", workout: "REST", notes: "Logistics: Final gear check and drop bag prep." },
-                    { day: "Thursday", workout: "Rest", notes: "Final meal planning and visualization." },
+                    { day: "Wednesday", workout: "Active Recovery Rest", notes: "Active Recovery Rest: Logistics: Final gear check and drop bag prep." },
+                    { day: "Thursday", workout: "Active Recovery Rest", notes: "Active Recovery Rest: Final meal planning and visualization." },
                     { day: "Friday", workout: "Run (E) 15 min (very light shakeout)", notes: "Pre-race meal." },
                     { day: "Saturday", workout: "RACE DAY! (Jan 17th)", notes: "Execution Day! Trust your training." },
                     { day: "Sunday", workout: "RECOVERY (Jan 18th)", notes: "Celebrate your adventure and rest fully." }
@@ -303,8 +309,8 @@
         function updateSummaryMetrics(weekNum) {
             const data = TRAINING_DATA[weekNum];
             
-            let totalRest = data.schedule.filter(s => s.day.includes('REST') || s.workout.includes('Rest')).length;
-            if (data.week === 10) totalRest = 6; 
+            // Using the authoritative 'restDays' count from the data structure.
+            const totalRest = data.restDays; 
             
             summaryMetrics.innerHTML = `
                 <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-amber-500">
@@ -344,7 +350,8 @@
                 }
 
                 const row = scheduleBody.insertRow();
-                row.className = item.workout.includes('REST') || item.workout.includes('Rest') ? 'bg-amber-50 bg-opacity-70 text-gray-600' : 'hover:bg-gray-50 text-gray-800';
+                // Check for 'Active Recovery Rest' for styling purposes
+                row.className = item.workout.includes('Active Recovery Rest') || item.day.includes('RECOVERY') ? 'bg-amber-50 bg-opacity-70 text-gray-600' : 'hover:bg-gray-50 text-gray-800';
 
                 // Day column
                 row.insertCell().textContent = item.day;
