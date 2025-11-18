@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Intuitive Ultra Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #10B981; /* Emerald Green */
+            --color-secondary: #059669; /* Darker Green */
+            --color-background: #0F172A; /* Slate 900 */
+            --color-text: #E5E7EB; /* Gray 200 */
+            --color-card: #1E293B; /* Slate 800 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        .container-bg {
+            background-color: var(--color-card);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--color-primary);
+        }
+        .header-bg {
+            background: linear-gradient(135deg, var(--color-background), #1E40AF); /* Blue Gradient for Header */
+            border-bottom: 6px solid var(--color-primary);
+        }
+        .btn-primary {
+            background-color: var(--color-primary);
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-1px);
+        }
+        .ring-pulse {
+             animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
+        /* Style for the responsive calendar table */
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header Section -->
+    <header class="header-bg text-white p-6 md:p-10 rounded-xl shadow-2xl mb-12">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-tight">The Ultra Intuition Protocol</h1>
+            <p class="text-xl md:text-2xl font-light text-gray-300">8-Week Training: Structured Effort, Dauwalter-Inspired Flexibility.</p>
+            <p class="mt-4 text-sm text-gray-400 italic">Target Race: Jan 18th (AAA Race) | Today's Date: Nov 18th</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Section 1: Daily System Check -->
+        <section id="system-check" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 ring-pulse inline-block p-2 rounded-full bg-yellow-500/10">🧠</span> Daily System Check: Your Internal Coach
+            </h2>
+            <p class="mb-6 text-gray-300">Embrace the "train by feel" approach. Every morning, answer these three questions before deciding on your workout intensity.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">1. The Physical Scan</h3>
+                    <p class="text-sm text-gray-200">Where is the pain/soreness? If it's **sharp pain**, the answer is **rest**. If it's *fatigue/soreness*, a light run might be beneficial.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">2. The Mental/Stressor Scan</h3>
+                    <p class="text-sm text-gray-200">Am I burnt out, stressed, or dreading the run? If so, **cut the run in half** or change it to a fun, low-impact activity.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">3. The Hunger/Energy Scan</h3>
+                    <p class="text-sm text-gray-200">Am I well-fueled and rested? If running on fumes, a hard effort will do more harm. Choose an **Easy Run or Rest** instead.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Section 2: 8-Week Training Calendar -->
+        <section id="training-calendar" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-2xl">🗓️</span> 8-Week Core Training Template
+            </h2>
+            <p class="mb-6 text-gray-300">This is your structured guide. Let your Daily System Check determine which intensity level to pursue each day within the weekly intention.</p>
+            
+            <div class="overflow-x-auto">
+                <div class="min-w-full grid calendar-grid text-sm">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-3 bg-gray-700/70 font-semibold p-2 rounded-t-lg sticky top-0 z-10">
+                        <div class="p-2">Week</div>
+                        <div class="p-2">Primary Focus & Effort</div>
+                        <div class="p-2">Weekly Intentions (6 Active Days)</div>
+                    </div>
+                    
+                    <!-- Calendar Rows -->
+                    <!-- Week 1 -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Nov 18 - Nov 24</div>
+                        <div class="p-2 text-yellow-400">Base Consistency (Low-Medium)</div>
+                        <div class="p-2">1 LR (3-4 hrs easy), 1 Sustained Effort (90 mins), 4 Fun Runs.</div>
+                    </div>
+                    <!-- Week 2 -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Nov 25 - Dec 1</div>
+                        <div class="p-2 text-green-400">Volume & Strength (Medium)</div>
+                        <div class="p-2">⛰️ 1 LR (4-5 hrs easy-to-moderate), ⛰️ 1 Hill/Vert Focus (1-2 hrs), 4 Fun Runs.</div>
+                    </div>
+                    <!-- Week 3 (Peak) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
+                        <div class="p-2 font-medium">Dec 2 - Dec 8</div>
+                        <div class="p-2 text-red-400 font-bold">High Volume Peak (Medium-High)</div>
+                        <div class="p-2">⛰️ 1 LR (5+ hrs or 2 long runs back-to-back), 🏃 1 Sustained Effort (90-120 mins), 3-4 Fun Runs.</div>
+                    </div>
+                    <!-- Week 4 (Pre-Taper) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Dec 9 - Dec 15</div>
+                        <div class="p-2 text-yellow-400">Pre-Race Taper (Low-Medium)</div>
+                        <div class="p-2">🔪 Volume Cut by 20-30%. 1 LR (3 hrs very easy). Focus on mobility.</div>
+                    </div>
+                    <!-- Week 5 (Tune-Up Race) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Dec 16 - Dec 22</div>
+                        <div class="p-2 text-blue-400 font-bold">TUNE-UP RACE WEEK</div>
+                        <div class="p-2">M/T: Short strides + Strength. W/Th/F: Very easy short jogs. **SAT: TUNE-UP RACE.** Sun: Full Rest.</div>
+                    </div>
+                    <!-- Week 6 (Recovery) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Dec 23 - Dec 29</div>
+                        <div class="p-2 text-yellow-400">Recovery & Reset (Very Low)</div>
+                        <div class="p-2">🧘 Volume Cut by 40-50%. 3-4 very easy, short jogs. Priority: Sleep & 7x Strength.</div>
+                    </div>
+                    <!-- Week 7 (Rebound) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                        <div class="p-2 font-medium">Dec 30 - Jan 5</div>
+                        <div class="p-2 text-green-400">Final Build/Rebound (Medium)</div>
+                        <div class="p-2">🏃 **Last Long Effort (3-4 hrs)**. 1 Sustained Effort (1 hour). 3-4 Easy/Fun Runs.</div>
+                    </div>
+                    <!-- Week 8 (Race Taper) -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
+                        <div class="p-2 font-medium">Jan 6 - Jan 12</div>
+                        <div class="p-2 text-red-400 font-bold">Taper - Volume Drop (Low)</div>
+                        <div class="p-2">🔪 Volume Cut by 60%. 4-5 very short (20-40 min), easy runs. **Maintain Strength Routine.**</div>
+                    </div>
+                     <!-- Race Week -->
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-blue-900/50">
+                        <div class="p-2 font-medium">Jan 13 - Jan 19</div>
+                        <div class="p-2 text-white font-bold">RACE WEEK (Jan 18)</div>
+                        <div class="p-2">🏃 M/W/F: 20-min jog + 4 quick strides. Th: Full Rest. Fri: Very light shakeout. **SAT: AAA RACE!**</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Daily Activation/Strength Routine -->
+        <section id="strength-routine" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-2xl">💪</span> Daily Activation Routine (15-20 Min)
+            </h2>
+            <p class="mb-6 text-gray-300">Perform this routine **7 days a week** before your run or later in the day. Focus on **control and form** (2-3 Sets of 15-20 Reps).</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Strength Card 1 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">1. Single-Leg Glute Bridges</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Glute Max & Hamstrings</p>
+                    <p class="text-sm">Lift hips with both feet, then extend one leg. Drive back up, squeezing the glute of the planted foot. Keep hips level and square.</p>
+                </div>
+                <!-- Strength Card 2 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">2. Clamshells</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Glute Medius (Hip Stabilizer)</p>
+                    <p class="text-sm">Lie on your side with knees bent. Keep feet together and lift the top knee. Use a band for more resistance. Do not rock your torso.</p>
+                </div>
+                <!-- Strength Card 3 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">3. Bird-Dogs</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Core & Posterior Chain</p>
+                    <p class="text-sm">Start on all fours. Extend opposite arm/leg parallel to the floor. Avoid arching your lower back. Hold for a 2-second pause at extension.</p>
+                </div>
+                <!-- Strength Card 4 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">4. Side Planks (w/ Rotation)</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Obliques & Hip Abductors</p>
+                    <p class="text-sm">Hold a straight side plank line. For rotation, thread your top arm under your body, then raise it back up. Maintain a rigid core.</p>
+                </div>
+                <!-- Strength Card 5 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">5. Single-Leg Deadlifts (SLDL)</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Balance & Hamstring/Glute Strength</p>
+                    <p class="text-sm">Hinge at the hip, keeping a flat back, extending one leg behind you. Go slowly and focus on balancing on the planted foot.</p>
+                </div>
+                <!-- Strength Card 6 -->
+                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-color-primary mb-2">6. Single-Leg Calf Raises</h3>
+                    <p class="text-xs text-gray-400 italic mb-2">Focus: Calf & Ankle Stability</p>
+                    <p class="text-sm">Stand on one foot. Slowly raise yourself onto the ball of your foot (tip-toes), hold briefly, and lower slowly with control. Important for trail stability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Lifestyle & Recovery -->
+        <section id="lifestyle" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-2xl">🌟</span> Lifestyle & Recovery Pillars
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-300">
+                <div>
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">Fueling (The Fun Way)</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
+                        <li>Eat what feels right for daily life—don't restrict.</li>
+                        <li>Practice eating the "fun foods" (candy, simple carbs) on long runs.</li>
+                        <li>Hydrate constantly, not just during runs.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">Recovery & Mindset</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
+                        <li>**Sleep is #1:** Take extra sleep over a scheduled run if needed.</li>
+                        <li>Keep gear simple and comfortable; reduce decision fatigue.</li>
+                        <li>Embrace the discomfort: Use the Dauwalter mantra ("I'm fine," "Everything is fine") when the Pain Cave comes calling.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+        &copy; 2025 Intuitive Ultra Training | Built with Tailwind CSS
+    </footer>
+
+</body>
+</html>
