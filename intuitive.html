@@ -74,6 +74,19 @@
             font-size: 0.75rem; /* 12px */
         }
         
+        /* NEW: Strength Tag Style */
+        .strength-tag {
+            background-color: rgba(139, 92, 246, 0.6); /* violet-500/60 */
+            color: #F3E8FF; /* violet-100 */
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+        }
+
         /* New Styles for formatted week lists */
         .week-list p {
             margin-bottom: 4px;
@@ -163,9 +176,9 @@
     <!-- Header Section -->
     <header class="header-bg text-white p-6 md:p-10 rounded-xl shadow-2xl mb-12">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-tight">The Ultra Intuition Based Running Training Plan</h1>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-tight">The Ultra Intuition Protocol</h1>
             <p class="text-xl md:text-2xl font-light text-gray-300">8-Week Training: Structured Effort, Dauwalter-Inspired Flexibility.</p>
-            <p class="mt-4 text-sm text-gray-400 italic">Target Race: Jan 18th (A Race) | Training Start: Nov 18th</p>
+            <p class="mt-4 text-sm text-gray-400 italic">Target Race: Jan 18th (AAA Race) | Target Start: Nov 18th</p>
         </div>
     </header>
 
@@ -181,15 +194,154 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
                     <h3 class="text-xl font-semibold text-yellow-300 mb-2">1. The Physical Scan</h3>
-                    <p class="text-sm text-gray-200">Where is the pain/soreness? If it's <b>sharp pain</b>, the answer is <b>rest</b>. If it's <b>fatigue/soreness</b>, a light run might be beneficial.</p>
+                    <p class="text-sm text-gray-200">Where is the pain/soreness? If it's **sharp pain**, the answer is **rest**. If it's *fatigue/soreness*, a light run might be beneficial.</p>
                 </div>
                 <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
-                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">2. The Mental Scan</h3>
-                    <p class="text-sm text-gray-200">Am I burnt out, stressed, or dreading the run? If so, <b>cut the run in half</b> or change it to a fun, low-impact activity.</p>
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">2. The Mental/Stressor Scan</h3>
+                    <p class="text-sm text-gray-200">Am I burnt out, stressed, or dreading the run? If so, **cut the run in half** or change it to a fun, low-impact activity.</p>
                 </div>
                 <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
-                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">3. The Energy Scan</h3>
-                    <p class="text-sm text-gray-200">Am I well-fueled and rested? If running on fumes, a hard effort will do more harm. Choose an <b>easy run or rest</b> instead.</p>
+                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">3. The Hunger/Energy Scan</h3>
+                    <p class="text-sm text-gray-200">Am I well-fueled and rested? If running on fumes, a hard effort will do more harm. Choose an **Easy Run or Rest** instead.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1.5: Key Workouts Explained -->
+        <section id="key-workouts" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-2xl">⚡</span> Key Workouts Explained: Specific Efforts
+            </h2>
+            <p class="mb-6 text-gray-300">These two workouts are the performance-building pillars of your plan. Treat them as non-negotiable in the week's intention, but **always** adjust the duration/intensity based on your Daily System Check.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Threshold Run Details -->
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-indigo-500">
+                    <h3 class="text-xl font-semibold text-indigo-300 mb-2">1. The Threshold Run (Sustained Pace)</h3>
+                    <p class="text-sm text-gray-200 mb-3">Goal: Improve your ability to sustain a hard effort for long periods without accumulating excessive fatigue. This pace is **"Comfortably Hard"** (Zone 3/4).</p>
+                    
+                    <div class="space-y-3 mt-4">
+                        <!-- Intensity -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-indigo-400">
+                            <span class="text-lg mr-3">🔥</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Intensity Check</p>
+                                <p class="text-xs text-gray-300">You can speak **3-4 words at a time**, but not full sentences.</p>
+                            </div>
+                        </div>
+                        <!-- Workout -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-indigo-400">
+                            <span class="text-lg mr-3">⏱️</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Example Structure (90 min)</p>
+                                <p class="text-xs text-gray-300">Warmup &rarr; **2 x 20 min @ Threshold** (5 min recovery) &rarr; Cooldown.</p>
+                            </div>
+                        </div>
+                        <!-- Flexibility -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-indigo-400">
+                            <span class="text-lg mr-3">✂️</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Flexibility Rule</p>
+                                <p class="text-xs text-gray-300">If low energy, cut main set to **1 x 20 min** or shorten the pace duration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hill/Vert Focus Details -->
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-amber-500">
+                    <h3 class="text-xl font-semibold text-amber-300 mb-2">2. Hill/Vert Focus (Strength & Power)</h3>
+                    <p class="text-sm text-gray-200 mb-3">Goal: Build leg strength and power specific to ultra-running, which translates to efficiency and resilience on climbs.</p>
+                    
+                    <div class="space-y-3 mt-4">
+                        <!-- Power Option -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-amber-400">
+                            <span class="text-lg mr-3">🚀</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Option A: Hill Repeats (Power)</p>
+                                <p class="text-xs text-gray-300">**6-10x** (60-90 sec hard up, walk/jog down recovery).</p>
+                            </div>
+                        </div>
+                        <!-- Endurance Option -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-amber-400">
+                            <span class="text-lg mr-3">🏔️</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Option B: Long Climb (Endurance)</p>
+                                <p class="text-xs text-gray-300">**30+ min** sustained climb @ RPE 6/10 (steady run/power hike).</p>
+                            </div>
+                        </div>
+                        <!-- Flexibility -->
+                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-amber-400">
+                            <span class="text-lg mr-3">🚶</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Flexibility Rule</p>
+                                <p class="text-xs text-gray-300">If sore, substitute running repeats with **fast power hiking** repeats.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 1.6: Minimalist Ultra-Strength Session (Courtney Style) -->
+        <section id="strength-training" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-2xl">💪</span> 30-Minute Ultra-Strength Session (Dauwalter Style)
+            </h2>
+            <p class="mb-6 text-gray-300">Courtney's approach prioritizes **efficiency** and **longevity** over heavy lifting. This routine focuses on the core, hips, and single-leg stability—the key components for downhill running resilience and injury prevention.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Session Placement -->
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-purple-500">
+                    <h3 class="text-xl font-semibold text-purple-300 mb-2">When to Schedule This (1-2x/Week)</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-xs text-gray-300">
+                        <li>**Recommendation:** Pair with a **Fun Run** (Tuesday or Friday) after the run is complete.</li>
+                        <li>**Alternative:** Schedule it on a **Rest Day** to ensure maximal separation from your hard running efforts.</li>
+                        <li>**Duration:** 20-30 minutes, 1-2 times per week.</li>
+                    </ul>
+                </div>
+                <!-- The Routine - UI Friendly Update -->
+                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-purple-500">
+                    <h3 class="text-xl font-semibold text-purple-300 mb-4">The Minimalist Routine</h3>
+                    <p class="text-xs text-gray-400 mb-4 italic">Complete 2 rounds of the first three sections, and 1 round of the Foot/Ankle section.</p>
+
+                    <div class="space-y-3">
+                        <!-- Hip & Glute -->
+                        <div class="flex items-center p-3 bg-gray-800 rounded-lg shadow-md border-l-4 border-yellow-500">
+                            <span class="text-xl mr-3">🍑</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Hip & Glute (2 Rounds)</p>
+                                <p class="text-xs text-gray-300">Clamshells (<span class="font-bold text-yellow-300">20/side</span>) &middot; Glute Bridges (<span class="font-bold text-yellow-300">20 reps</span>)</p>
+                            </div>
+                        </div>
+
+                        <!-- Core Stability -->
+                        <div class="flex items-center p-3 bg-gray-800 rounded-lg shadow-md border-l-4 border-blue-500">
+                            <span class="text-xl mr-3">🧱</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Core Stability (2 Rounds)</p>
+                                <p class="text-xs text-gray-300">Plank (<span class="font-bold text-blue-300">60 seconds</span>) &middot; Side Planks (<span class="font-bold text-blue-300">30 seconds/side</span>)</p>
+                            </div>
+                        </div>
+
+                        <!-- Single-Leg Strength -->
+                        <div class="flex items-center p-3 bg-gray-800 rounded-lg shadow-md border-l-4 border-red-500">
+                            <span class="text-xl mr-3">🦵</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Single-Leg Strength (2 Rounds)</p>
+                                <p class="text-xs text-gray-300">Single-Leg Deadlifts (<span class="font-bold text-red-300">10/side</span>) &middot; Reverse Lunges (<span class="font-bold text-red-300">10/side</span>)</p>
+                            </div>
+                        </div>
+
+                        <!-- Foot/Ankle -->
+                        <div class="flex items-center p-3 bg-gray-800 rounded-lg shadow-md border-l-4 border-green-500">
+                            <span class="text-xl mr-3">👣</span>
+                            <div>
+                                <p class="font-medium text-white text-sm">Foot/Ankle (1 Round)</p>
+                                <p class="text-xs text-gray-300">Calf Raises (<span class="font-bold text-green-300">20 reps</span>) &middot; Ankle Alphabets</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -218,8 +370,9 @@
                         <div class="p-2 text-yellow-400">Base Consistency (Low-Medium)</div>
                         <div class="p-2">
                             <span class="priority-tag">1 Long Run (3-4 hrs easy)</span>
-                            <span class="priority-tag">1 Sustained Effort (90 mins)</span>
-                            <span class="flexible-tag">4 Easy Runs</span>
+                            <span class="priority-tag">1 Threshold Run (90 mins)</span>
+                            <span class="flexible-tag">4 Fun Runs</span>
+                            <span class="strength-tag">1-2x Strength Session</span>
                         </div>
                     </div>
                     <!-- Week 2 -->
@@ -229,7 +382,8 @@
                         <div class="p-2">
                             <span class="priority-tag">⛰️ 1 Long Run (4-5 hrs)</span>
                             <span class="priority-tag">⛰️ 1 Hill/Vert Focus (1-2 hrs)</span>
-                            <span class="flexible-tag">4 Easy Runs</span>
+                            <span class="flexible-tag">4 Fun Runs</span>
+                            <span class="strength-tag">1-2x Strength Session</span>
                         </div>
                     </div>
                     <!-- Week 3 (Peak) -->
@@ -238,8 +392,9 @@
                         <div class="p-2 text-red-400 font-bold">High Volume Peak (Medium-High)</div>
                         <div class="p-2">
                             <span class="priority-tag">⛰️ 1 Long Run (5+ hrs or B2B)</span>
-                            <span class="priority-tag">🏃 1 Sustained Effort (90-120)</span>
-                            <span class="flexible-tag">3-4 Easy Runs</span>
+                            <span class="priority-tag">🏃 1 Threshold Run (90-120)</span>
+                            <span class="flexible-tag">3-4 Fun Runs</span>
+                            <span class="strength-tag">1x Strength Session</span>
                         </div>
                     </div>
                     <!-- Week 4 (Pre-Taper) -->
@@ -247,20 +402,21 @@
                         <div class="p-2 font-medium">Dec 9 - Dec 15</div>
                         <div class="p-2 text-yellow-400">Pre-Race Taper (Low-Medium)</div>
                         <div class="p-2">
-                            <span class="priority-tag">1 Long Run (3 hrs very easy)</span>. 
-                            <span class="flexible-tag">2-3 Easy Jogs</span>.
+                            <span class="priority-tag">1 Long Run (3 hrs very easy)</span>
+                            <span class="flexible-tag">2-3 Easy Jogs</span>
+                            <span class="strength-tag">1x Light Strength</span>
                             <p class="mt-2 text-xs text-gray-400">🔪 Volume Cut by 20-30%</p>
                         </div>
                     </div>
                     <!-- Week 5 (Tune-Up Race) -->
                     <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 16 - Dec 22</div>
-                        <div class="p-2 text-blue-400 font-bold">Tune-Up Race Week</div>
+                        <div class="p-2 text-blue-400 font-bold">TUNE-UP RACE WEEK</div>
                         <div class="p-2 week-list text-xs">
-                            <p><strong>Monday/Tuesday:</strong> <span class="priority-tag">Short Strides</span></p>
-                            <p><strong>Wednesday/Thursday/Friday:</strong> <span class="flexible-tag">Very Easy Jogs (30min)</span></p>
-                            <p><strong>Saturday:</strong> <span class="priority-tag">Tune-up Race</span></p>
-                            <p><strong>Sunday:</strong> <span class="flexible-tag">Full Rest</span></p>
+                            <p><strong>Mon/Tue:</strong> <span class="priority-tag">Short Strides</span></p>
+                            <p><strong>Wed-Fri:</strong> <span class="flexible-tag">Very Easy Jogs (30min)</span></p>
+                            <p><strong>Sat:</strong> <span class="priority-tag">TUNE-UP RACE</span></p>
+                            <p><strong>Sun:</strong> <span class="flexible-tag">Full Rest</span></p>
                         </div>
                     </div>
                     <!-- Week 6 (Recovery) -->
@@ -277,9 +433,10 @@
                         <div class="p-2 font-medium">Dec 30 - Jan 5</div>
                         <div class="p-2 text-green-400">Final Build/Rebound (Medium)</div>
                         <div class="p-2">
-                            <span class="priority-tag">🏃 Last Long Effort (3-4 hrs)</span>
-                            <span class="priority-tag">1 Sustained Effort (1 hour)</span>
-                            <span class="flexible-tag">3-4 Easy/Easy Runs</span>
+                            <span class="priority-tag">🏃 Last Long Run (3-4 hrs)</span>
+                            <span class="priority-tag">1 Threshold Run (1 hour)</span>
+                            <span class="flexible-tag">3-4 Easy/Fun Runs</span>
+                            <span class="strength-tag">1x Strength Session</span>
                         </div>
                     </div>
                     <!-- Week 8 (Race Taper) -->
@@ -294,12 +451,12 @@
                      <!-- Race Week -->
                     <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-blue-900/50">
                         <div class="p-2 font-medium">Jan 13 - Jan 19</div>
-                        <div class="p-2 text-white font-bold">Race Week (Jan 18)</div>
+                        <div class="p-2 text-white font-bold">RACE WEEK (Jan 18)</div>
                         <div class="p-2 week-list text-xs">
-                            <p><strong>Monday/Wednesday:</strong> <span class="flexible-tag">20-min jog + 4 quick strides</span></p>
-                            <p><strong>Tuesday/Thursday:</strong> <span class="flexible-tag">Full Rest</span></p>
-                            <p><strong>Friday:</strong> <span class="flexible-tag">Light Shakeout (15min)</span></p>
-                            <p><strong>Saturday:</strong> <span class="priority-tag">A Race!</span></p>
+                            <p><strong>Mon/Wed:</strong> <span class="flexible-tag">20-min jog + 4 quick strides</span></p>
+                            <p><strong>Tue/Thu:</strong> <span class="flexible-tag">Full Rest</span></p>
+                            <p><strong>Fri:</strong> <span class="flexible-tag">Light Shakeout (15min)</span></p>
+                            <p><strong>Sat:</strong> <span class="priority-tag">AAA RACE!</span></p>
                         </div>
                     </div>
                 </div>
@@ -311,7 +468,7 @@
             <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
                 <span class="mr-3 text-2xl">📊</span> 8-Week Training Load Visualization
             </h2>
-            <p class="mb-8 text-gray-300 -mt-4">This chart visualizes your training load, showing the peak (Wk 3), tune-up (Wk 5), recovery (Wk 6), and final taper to your A Race.</p>
+            <p class="mb-8 text-gray-300 -mt-4">This chart visualizes your training load, showing the peak (Wk 3), tune-up (Wk 5), recovery (Wk 6), and final taper to your AAA Race.</p>
             
             <div class="bar-chart-container">
                 <!-- Y-Axis Labels -->
@@ -331,47 +488,47 @@
                 <!-- Chart Area -->
                 <div class="bar-chart-area">
                     <!-- Week 1: 60% -->
-                    <div class="bar-wrapper" title="Week 1: Base Load (60%)">
+                    <div class="bar-wrapper" title="Wk 1 (Nov 18 - 24): Base Load (60%)">
                         <div class="bar" style="height: 60%;"></div>
                         <span class="bar-label">Wk 1</span>
                     </div>
                     <!-- Week 2: 80% -->
-                    <div class="bar-wrapper" title="Week 2: Volume Build (80%)">
+                    <div class="bar-wrapper" title="Wk 2 (Nov 25 - Dec 1): Volume Build (80%)">
                         <div class="bar" style="height: 80%;"></div>
                         <span class="bar-label">Wk 2</span>
                     </div>
                     <!-- Week 3: 100% -->
-                    <div class="bar-wrapper" title="Week 3: Peak Load (100%)">
+                    <div class="bar-wrapper" title="Wk 3 (Dec 2 - 8): Peak Load (100%)">
                         <div class="bar" style="height: 100%; background: linear-gradient(to top, #D97706, #F59E0B);"></div>
                         <span class="bar-label text-yellow-400">Peak</span>
                     </div>
                     <!-- Week 4: 70% -->
-                    <div class="bar-wrapper" title="Week 4: Pre-Taper (70%)">
+                    <div class="bar-wrapper" title="Wk 4 (Dec 9 - 15): Pre-Taper (70%)">
                         <div class="bar" style="height: 70%;"></div>
                         <span class="bar-label">Wk 4</span>
                     </div>
                     <!-- Week 5: 50% -->
-                    <div class="bar-wrapper" title="Week 5: Tune-Up Week (50%)">
+                    <div class="bar-wrapper" title="Wk 5 (Dec 16 - 22): Tune-Up Week (50%)">
                         <div class="bar" style="height: 50%; background: linear-gradient(to top, #2563EB, #3B82F6);"></div>
                         <span class="bar-label text-blue-400">Tune-Up</span>
                     </div>
                     <!-- Week 6: 30% -->
-                    <div class="bar-wrapper" title="Week 6: Recovery (30%)">
+                    <div class="bar-wrapper" title="Wk 6 (Dec 23 - 29): Recovery (30%)">
                         <div class="bar" style="height: 30%;"></div>
                         <span class="bar-label">Wk 6</span>
                     </div>
                     <!-- Week 7: 75% -->
-                    <div class="bar-wrapper" title="Week 7: Final Build (75%)">
+                    <div class="bar-wrapper" title="Wk 7 (Dec 30 - Jan 5): Final Build (75%)">
                         <div class="bar" style="height: 75%;"></div>
                         <span class="bar-label">Wk 7</span>
                     </div>
                     <!-- Week 8: 40% -->
-                    <div class="bar-wrapper" title="Week 8: Taper (40%)">
+                    <div class="bar-wrapper" title="Wk 8 (Jan 6 - 12): Taper (40%)">
                         <div class="bar" style="height: 40%;"></div>
                         <span class="bar-label">Wk 8</span>
                     </div>
                     <!-- Race Week: 25% -->
-                    <div class="bar-wrapper" title="Race Week (25%)">
+                    <div class="bar-wrapper" title="Race Week (Jan 13 - 19): Taper Final (25%)">
                         <div class="bar" style="height: 25%; background: linear-gradient(to top, #DC2626, #F87171);"></div>
                         <span class="bar-label text-red-400">Race</span>
                     </div>
@@ -389,16 +546,16 @@
                     <h3 class="text-xl font-semibold text-yellow-300 mb-2">Fueling (The Fun Way)</h3>
                     <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
                         <li>Eat what feels right for daily life—don't restrict.</li>
-                        <li>Practice eating the &quot;fun foods&quot; (candy, simple carbs) on long runs.</li>
+                        <li>Practice eating the "fun foods" (candy, simple carbs) on long runs.</li>
                         <li>Hydrate constantly, not just during runs.</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-yellow-300 mb-2">Recovery & Mindset</h3>
                     <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
-                        <li><br>Sleep is #1:</br> Take extra sleep over a scheduled run if needed.</li>
+                        <li>**Sleep is #1:** Take extra sleep over a scheduled run if needed.</li>
                         <li>Keep gear simple and comfortable; reduce decision fatigue.</li>
-                        <li>Embrace the discomfort: Use the Dauwalter mantra (&quot;I'm fine,&quot; &quot;Everything is fine&quot;) when the Pain Cave comes calling.</li>
+                        <li>Embrace the discomfort: Use the Dauwalter mantra ("I'm fine," "Everything is fine") when the Pain Cave comes calling.</li>
                     </ul>
                 </div>
             </div>
@@ -407,7 +564,7 @@
     </main>
 
     <footer class="mt-12 text-center text-gray-500 text-sm">
-        &copy; Vibe Code with Gemini By Kent | Built with Tailwind CSS
+        &copy; 2025 Intuitive Ultra Training | Built with Tailwind CSS
     </footer>
 
 </body>
