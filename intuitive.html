@@ -50,6 +50,112 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Styles for Highlighting Run Types */
+        .priority-tag {
+            background-color: rgba(79, 70, 229, 0.6); /* indigo-600/60 */
+            color: #E0E7FF; /* indigo-100 */
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 9999px; /* full rounded */
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            font-size: 0.75rem; /* 12px */
+        }
+        .flexible-tag {
+            background-color: rgba(4, 120, 87, 0.6); /* emerald-700/60 */
+            color: #D1FAE5; /* emerald-100 */
+            padding: 2px 8px;
+            border-radius: 9999px; /* full rounded */
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            font-size: 0.75rem; /* 12px */
+        }
+        
+        /* New Styles for formatted week lists */
+        .week-list p {
+            margin-bottom: 4px;
+        }
+        .week-list strong {
+            display: inline-block;
+            width: 70px; /* Aligns the text after the day */
+            font-weight: 600;
+        }
+        
+        /* Bar Chart Styles */
+        .bar-chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px; /* Fixed height for the chart area */
+            padding-left: 40px; /* Space for Y-axis labels */
+            padding-bottom: 30px; /* Space for X-axis labels */
+        }
+        .y-axis-labels {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 30px; /* Match padding-bottom */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #9CA3AF; /* gray-400 */
+        }
+        .x-axis-grid {
+            position: absolute;
+            left: 40px; /* Match padding-left */
+            right: 0;
+            top: 0;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .x-axis-grid .grid-line {
+            width: 100%;
+            border-top: 1px dashed #4B5563; /* gray-600 */
+        }
+        .bar-chart-area {
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            border-left: 2px solid #6B7280; /* gray-500 */
+            border-bottom: 2px solid #6B7280; /* gray-500 */
+            padding: 0 1%;
+        }
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .bar {
+            width: 70%; /* Width of the bar */
+            background: linear-gradient(to top, var(--color-secondary), var(--color-primary));
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease-out, opacity 0.5s;
+            opacity: 0.8;
+        }
+        .bar:hover {
+            opacity: 1;
+        }
+        .bar-label {
+            font-size: 0.75rem; /* 12px */
+            color: #D1D5DB; /* gray-300 */
+            margin-top: 8px;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(100%);
+            padding-bottom: 4px;
+        }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -107,106 +213,168 @@
                     
                     <!-- Calendar Rows -->
                     <!-- Week 1 -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Nov 18 - Nov 24</div>
                         <div class="p-2 text-yellow-400">Base Consistency (Low-Medium)</div>
-                        <div class="p-2">1 LR (3-4 hrs easy), 1 Sustained Effort (90 mins), 4 Fun Runs.</div>
+                        <div class="p-2">
+                            <span class="priority-tag">1 LR (3-4 hrs easy)</span>
+                            <span class="priority-tag">1 Sustained Effort (90 mins)</span>
+                            <span class="flexible-tag">4 Fun Runs</span>
+                        </div>
                     </div>
                     <!-- Week 2 -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Nov 25 - Dec 1</div>
                         <div class="p-2 text-green-400">Volume & Strength (Medium)</div>
-                        <div class="p-2">⛰️ 1 LR (4-5 hrs easy-to-moderate), ⛰️ 1 Hill/Vert Focus (1-2 hrs), 4 Fun Runs.</div>
+                        <div class="p-2">
+                            <span class="priority-tag">⛰️ 1 LR (4-5 hrs)</span>
+                            <span class="priority-tag">⛰️ 1 Hill/Vert Focus (1-2 hrs)</span>
+                            <span class="flexible-tag">4 Fun Runs</span>
+                        </div>
                     </div>
                     <!-- Week 3 (Peak) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
                         <div class="p-2 font-medium">Dec 2 - Dec 8</div>
                         <div class="p-2 text-red-400 font-bold">High Volume Peak (Medium-High)</div>
-                        <div class="p-2">⛰️ 1 LR (5+ hrs or 2 long runs back-to-back), 🏃 1 Sustained Effort (90-120 mins), 3-4 Fun Runs.</div>
+                        <div class="p-2">
+                            <span class="priority-tag">⛰️ 1 LR (5+ hrs or B2B)</span>
+                            <span class="priority-tag">🏃 1 Sustained Effort (90-120)</span>
+                            <span class="flexible-tag">3-4 Fun Runs</span>
+                        </div>
                     </div>
                     <!-- Week 4 (Pre-Taper) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 9 - Dec 15</div>
                         <div class="p-2 text-yellow-400">Pre-Race Taper (Low-Medium)</div>
-                        <div class="p-2">🔪 Volume Cut by 20-30%. 1 LR (3 hrs very easy). Focus on mobility.</div>
+                        <div class="p-2">
+                            <span class="priority-tag">1 LR (3 hrs very easy)</span>. 
+                            <span class="flexible-tag">2-3 Easy Jogs</span>.
+                            <p class="mt-2 text-xs text-gray-400">🔪 Volume Cut by 20-30%</p>
+                        </div>
                     </div>
                     <!-- Week 5 (Tune-Up Race) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 16 - Dec 22</div>
                         <div class="p-2 text-blue-400 font-bold">TUNE-UP RACE WEEK</div>
-                        <div class="p-2">M/T: Short strides + Strength. W/Th/F: Very easy short jogs. **SAT: TUNE-UP RACE.** Sun: Full Rest.</div>
+                        <div class="p-2 week-list text-xs">
+                            <p><strong>M/T:</strong> <span class="priority-tag">Short Strides</span></p>
+                            <p><strong>W/Th/F:</strong> <span class="flexible-tag">Very Easy Jogs (30min)</span></p>
+                            <p><strong>SAT:</strong> <span class="priority-tag">TUNE-UP RACE</span></p>
+                            <p><strong>Sun:</strong> <span class="flexible-tag">Full Rest</span></p>
+                        </div>
                     </div>
                     <!-- Week 6 (Recovery) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 23 - Dec 29</div>
                         <div class="p-2 text-yellow-400">Recovery & Reset (Very Low)</div>
-                        <div class="p-2">🧘 Volume Cut by 40-50%. 3-4 very easy, short jogs. Priority: Sleep & 7x Strength.</div>
+                        <div class="p-2">
+                            <span class="flexible-tag">3-4 Very Easy Jogs</span>
+                            <p class="mt-2 text-xs text-gray-400">🧘 Volume Cut by 40-50%. Priority: Sleep.</p>
+                        </div>
                     </div>
                     <!-- Week 7 (Rebound) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 30 - Jan 5</div>
                         <div class="p-2 text-green-400">Final Build/Rebound (Medium)</div>
-                        <div class="p-2">🏃 **Last Long Effort (3-4 hrs)**. 1 Sustained Effort (1 hour). 3-4 Easy/Fun Runs.</div>
+                        <div class="p-2">
+                            <span class="priority-tag">🏃 Last Long Effort (3-4 hrs)</span>
+                            <span class="priority-tag">1 Sustained Effort (1 hour)</span>
+                            <span class="flexible-tag">3-4 Easy/Fun Runs</span>
+                        </div>
                     </div>
                     <!-- Week 8 (Race Taper) -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
                         <div class="p-2 font-medium">Jan 6 - Jan 12</div>
                         <div class="p-2 text-red-400 font-bold">Taper - Volume Drop (Low)</div>
-                        <div class="p-2">🔪 Volume Cut by 60%. 4-5 very short (20-40 min), easy runs. **Maintain Strength Routine.**</div>
+                        <div class="p-2">
+                            <span class="flexible-tag">4-5 Very Short Jogs (20-40min)</span>
+                             <p class="mt-2 text-xs text-gray-400">🔪 Volume Cut by 60%</p>
+                        </div>
                     </div>
                      <!-- Race Week -->
-                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-center hover:bg-gray-700/50 transition duration-150 bg-blue-900/50">
+                    <div class="grid grid-cols-3 border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-blue-900/50">
                         <div class="p-2 font-medium">Jan 13 - Jan 19</div>
                         <div class="p-2 text-white font-bold">RACE WEEK (Jan 18)</div>
-                        <div class="p-2">🏃 M/W/F: 20-min jog + 4 quick strides. Th: Full Rest. Fri: Very light shakeout. **SAT: AAA RACE!**</div>
+                        <div class="p-2 week-list text-xs">
+                            <p><strong>M/W:</strong> <span class="flexible-tag">20-min jog + 4 quick strides</span></p>
+                            <p><strong>T/Th:</strong> <span class="flexible-tag">Full Rest</span></p>
+                            <p><strong>Fri:</strong> <span class="flexible-tag">Light Shakeout (15min)</span></p>
+                            <p><strong>SAT:</strong> <span class="priority-tag">AAA RACE!</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Daily Activation/Strength Routine -->
-        <section id="strength-routine" class="container-bg p-6 md:p-8 rounded-xl">
-            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
-                <span class="mr-3 text-2xl">💪</span> Daily Activation Routine (15-20 Min)
+        <!-- Section 3: Training Load Visualization -->
+        <section id="training-load" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                <span class="mr-3 text-2xl">📊</span> 8-Week Training Load Visualization
             </h2>
-            <p class="mb-6 text-gray-300">Perform this routine **7 days a week** before your run or later in the day. Focus on **control and form** (2-3 Sets of 15-20 Reps).</p>
+            <p class="mb-8 text-gray-300 -mt-4">This chart visualizes your training load, showing the peak (Wk 3), tune-up (Wk 5), recovery (Wk 6), and final taper to your AAA Race.</p>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Strength Card 1 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">1. Single-Leg Glute Bridges</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Glute Max & Hamstrings</p>
-                    <p class="text-sm">Lift hips with both feet, then extend one leg. Drive back up, squeezing the glute of the planted foot. Keep hips level and square.</p>
+            <div class="bar-chart-container">
+                <!-- Y-Axis Labels -->
+                <div class="y-axis-labels">
+                    <span>Max Load</span>
+                    <span>Medium</span>
+                    <span>Low</span>
                 </div>
-                <!-- Strength Card 2 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">2. Clamshells</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Glute Medius (Hip Stabilizer)</p>
-                    <p class="text-sm">Lie on your side with knees bent. Keep feet together and lift the top knee. Use a band for more resistance. Do not rock your torso.</p>
+                
+                <!-- Grid Lines -->
+                <div class="x-axis-grid">
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
                 </div>
-                <!-- Strength Card 3 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">3. Bird-Dogs</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Core & Posterior Chain</p>
-                    <p class="text-sm">Start on all fours. Extend opposite arm/leg parallel to the floor. Avoid arching your lower back. Hold for a 2-second pause at extension.</p>
-                </div>
-                <!-- Strength Card 4 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">4. Side Planks (w/ Rotation)</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Obliques & Hip Abductors</p>
-                    <p class="text-sm">Hold a straight side plank line. For rotation, thread your top arm under your body, then raise it back up. Maintain a rigid core.</p>
-                </div>
-                <!-- Strength Card 5 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">5. Single-Leg Deadlifts (SLDL)</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Balance & Hamstring/Glute Strength</p>
-                    <p class="text-sm">Hinge at the hip, keeping a flat back, extending one leg behind you. Go slowly and focus on balancing on the planted foot.</p>
-                </div>
-                <!-- Strength Card 6 -->
-                <div class="p-4 bg-gray-700/50 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-color-primary mb-2">6. Single-Leg Calf Raises</h3>
-                    <p class="text-xs text-gray-400 italic mb-2">Focus: Calf & Ankle Stability</p>
-                    <p class="text-sm">Stand on one foot. Slowly raise yourself onto the ball of your foot (tip-toes), hold briefly, and lower slowly with control. Important for trail stability.</p>
+
+                <!-- Chart Area -->
+                <div class="bar-chart-area">
+                    <!-- Week 1: 60% -->
+                    <div class="bar-wrapper" title="Week 1: Base Load (60%)">
+                        <div class="bar" style="height: 60%;"></div>
+                        <span class="bar-label">Wk 1</span>
+                    </div>
+                    <!-- Week 2: 80% -->
+                    <div class="bar-wrapper" title="Week 2: Volume Build (80%)">
+                        <div class="bar" style="height: 80%;"></div>
+                        <span class="bar-label">Wk 2</span>
+                    </div>
+                    <!-- Week 3: 100% -->
+                    <div class="bar-wrapper" title="Week 3: Peak Load (100%)">
+                        <div class="bar" style="height: 100%; background: linear-gradient(to top, #D97706, #F59E0B);"></div>
+                        <span class="bar-label text-yellow-400">Peak</span>
+                    </div>
+                    <!-- Week 4: 70% -->
+                    <div class="bar-wrapper" title="Week 4: Pre-Taper (70%)">
+                        <div class="bar" style="height: 70%;"></div>
+                        <span class="bar-label">Wk 4</span>
+                    </div>
+                    <!-- Week 5: 50% -->
+                    <div class="bar-wrapper" title="Week 5: Tune-Up Week (50%)">
+                        <div class="bar" style="height: 50%; background: linear-gradient(to top, #2563EB, #3B82F6);"></div>
+                        <span class="bar-label text-blue-400">Tune-Up</span>
+                    </div>
+                    <!-- Week 6: 30% -->
+                    <div class="bar-wrapper" title="Week 6: Recovery (30%)">
+                        <div class="bar" style="height: 30%;"></div>
+                        <span class="bar-label">Wk 6</span>
+                    </div>
+                    <!-- Week 7: 75% -->
+                    <div class="bar-wrapper" title="Week 7: Final Build (75%)">
+                        <div class="bar" style="height: 75%;"></div>
+                        <span class="bar-label">Wk 7</span>
+                    </div>
+                    <!-- Week 8: 40% -->
+                    <div class="bar-wrapper" title="Week 8: Taper (40%)">
+                        <div class="bar" style="height: 40%;"></div>
+                        <span class="bar-label">Wk 8</span>
+                    </div>
+                    <!-- Race Week: 25% -->
+                    <div class="bar-wrapper" title="Race Week (25%)">
+                        <div class="bar" style="height: 25%; background: linear-gradient(to top, #DC2626, #F87171);"></div>
+                        <span class="bar-label text-red-400">Race</span>
+                    </div>
                 </div>
             </div>
         </section>
