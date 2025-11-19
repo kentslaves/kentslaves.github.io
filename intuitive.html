@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Intuitive Ultra Training Guide</title>
+    <title>The Intuitive Ultra Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        /* CSS from previous version, adapted for local storage simplicity */
+        /* UI Refresh: Better contrast, softer glow, and richer colors */
         :root {
-            --color-primary: #10B981; /* Emerald Green */
-            --color-secondary: #059669; /* Darker Green */
+            --color-primary: #34D399; /* Emerald 400 - vibrant */
+            --color-secondary: #059669; /* Emerald 600 - dark accent */
             --color-background: #0F172A; /* Slate 900 */
+            --color-card: #1E293B; /* Slate 800 - card background */
             --color-text: #E5E7EB; /* Gray 200 */
-            --color-card: #1E293B; /* Slate 800 */
+            --color-subtle: #475569; /* Slate 600 */
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -23,60 +24,71 @@
         }
         .container-bg {
             background-color: var(--color-card);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(52, 211, 153, 0.2); /* Subtle glow border */
         }
         .header-bg {
-            background: linear-gradient(135deg, var(--color-background), #1E40AF);
+            background: linear-gradient(135deg, var(--color-background), #1D4ED8); /* Dark Blue Gradient */
             border-bottom: 6px solid var(--color-primary);
         }
-        .ring-pulse {
-             animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse-ring {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-        }
         
-        .priority-tag, .flexible-tag, .strength-tag {
+        /* Tag Styling */
+        .priority-tag, .flexible-tag, .strength-tag, .vert-tag {
             font-size: 0.75rem;
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 9999px;
             display: inline-block;
-            margin-right: 4px;
+            margin-right: 6px;
             margin-bottom: 4px;
-            font-weight: 500;
+            font-weight: 600;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
         }
-        .priority-tag { background-color: rgba(79, 70, 229, 0.6); color: #E0E7FF; }
-        .flexible-tag { background-color: rgba(4, 120, 87, 0.6); color: #D1FAE5; }
-        .strength-tag { background-color: rgba(234, 179, 8, 0.6); color: #FEF3C7; }
-        
-        /* FIX: Added width: 100% to force each task onto its own line within the flex-wrap parent */
+        .priority-tag { background-color: #6366F1; color: #EEF2FF; } /* Indigo */
+        .flexible-tag { background-color: #06B6D4; color: #ECFEFF; } /* Cyan */
+        .strength-tag { background-color: #FBBF24; color: #44403C; } /* Amber */
+        .vert-tag { background-color: #F87171; color: #FFF1F2; } /* Red */
+
+        /* Key Workout Card Styles */
+        .workout-card {
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Workout Option Boxes */
+        .option-box {
+            space-y-2 text-xs text-gray-200 p-3 rounded-lg border border-opacity-30;
+        }
+        .option-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .option-detail {
+            margin-left: 1.25rem; /* Indentation */
+            font-size: 0.75rem;
+        }
+
+        /* Task and Calendar Layout */
         .task-item {
             display: flex;
             align-items: center;
             margin-bottom: 6px;
-            width: 100%; /* Forces stacking for mobile readability */
+            width: 100%;
         }
         .task-checkbox {
-            margin-right: 8px;
-            min-width: 1rem;
-            min-height: 1rem;
+            margin-right: 12px;
+            min-width: 1.25rem;
+            min-height: 1.25rem;
             cursor: pointer;
             accent-color: var(--color-primary);
         }
-        
-        /* Custom Mobile Fix for Calendar Row Wrapping (Retained from v2) */
-        .calendar-row-mobile-stack > div {
-            width: 100%;
-        }
         .calendar-row-mobile-stack {
-            grid-template-columns: 1fr; /* Default to single column (stacking) */
+            grid-template-columns: 1fr;
         }
         @media (min-width: 768px) {
-             /* At medium size and above, switch to three columns */
             .calendar-row-mobile-stack {
-                grid-template-columns: repeat(3, minmax(0, 1fr)); 
+                grid-template-columns: 1fr 1fr 2.5fr;
             }
         }
         
@@ -87,114 +99,150 @@
     <!-- Header Section -->
     <header class="header-bg text-white p-6 md:p-10 rounded-xl shadow-2xl mb-12">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-tight">The Ultra Intuition Training Guide</h1>
-            <p class="text-xl md:text-2xl font-light text-gray-300">8-Week Training: Structured Effort, Dauwalter-Inspired Flexibility.</p>
-            <p class="mt-4 text-sm text-gray-400 italic">Target Race: Jan 18th (AAA Race) | Target Start: Nov 18th</p>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-tight">🏔️ The Ultra Intuition Protocol</h1>
+            <p class="text-xl md:text-2xl font-light text-gray-300">8-Week Training: Structured Effort, Flexible Execution.</p>
+            <p class="mt-4 text-sm text-gray-400 italic">Target Race: Jan 18th | Target Start: Nov 18th</p>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto space-y-12">
         
         <!-- Section 1: Daily System Check -->
-        <section id="system-check" class="container-bg p-6 md:p-8 rounded-xl">
-            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
-                <span class="mr-3 ring-pulse inline-block p-2 rounded-full bg-yellow-500/10">🧠</span> Daily System Check: Your Internal Coach
+        <section id="daily-check" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-4 flex items-center">
+                <span class="mr-3 text-3xl">🔋</span> 1. Daily System Check (Non-Negotiable)
             </h2>
-            <p class="mb-6 text-gray-300">Embrace the <b>train by feel</b> approach. Every morning, answer these three questions before deciding on your workout intensity.</p>
+            <p class="text-gray-300 mb-6">Before *every* run, use this quick checklist. If you fail 3 or more points, consider an easy run or taking a rest day. **Listen to your body.**</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
-                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">1. The Physical Scan</h3>
-                    <p class="text-sm text-gray-200">Where is the pain/soreness? If it's <b>sharp pain</b>, the answer is <b>rest</b>. If it's <b>fatigue/soreness</b>, a light run might be beneficial.</p>
+            <ul class="grid md:grid-cols-2 gap-4 text-base">
+                <li class="p-4 bg-slate-700/50 rounded-lg flex items-center border border-gray-600">
+                    <span class="text-indigo-400 font-semibold mr-3 text-xl">😴</span> Sleep Quality: Did I get 7+ hours of quality sleep?
+                </li>
+                <li class="p-4 bg-slate-700/50 rounded-lg flex items-center border border-gray-600">
+                    <span class="text-indigo-400 font-semibold mr-3 text-xl">💧</span> Hydration: Did I drink water/electrolytes immediately upon waking?
+                </li>
+                <li class="p-4 bg-slate-700/50 rounded-lg flex items-center border border-gray-600">
+                    <span class="text-indigo-400 font-semibold mr-3 text-xl">🍎</span> Fuel Status: Am I adequately fueled for this workout?
+                </li>
+                <li class="p-4 bg-slate-700/50 rounded-lg flex items-center border border-gray-600">
+                    <span class="text-indigo-400 font-semibold mr-3 text-xl">🧠</span> Mindset: Am I feeling motivated or excessively drained/stressed?
+                </li>
+                <li class="p-4 bg-slate-700/50 rounded-lg flex items-center border border-gray-600">
+                    <span class="text-indigo-400 font-semibold mr-3 text-xl">🩹</span> Pain/Soreness: Do I have any sharp pains, new niggles, or unusual stiffness?
+                </li>
+            </ul>
+        </section>
+
+        <!-- Section 1.5: Key Workouts Explained (Improved Presentation) -->
+        <section id="key-workouts" class="container-bg p-6 md:p-8 rounded-xl">
+            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="mr-3 text-3xl">🎯</span> 2. Key Workouts Explained
+            </h2>
+            <p class="text-gray-300 mb-6">These are the focused, high-value efforts designed to prepare you for the race. Choose one option for the day's scheduled workout.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Long Run -->
+                <div class="workout-card bg-indigo-900/30 border border-indigo-400/50">
+                    <h3 class="font-bold text-xl text-indigo-300 flex items-center mb-2">
+                        <span class="mr-2 text-2xl">🐢</span> Long Run (Endurance & Practice)
+                    </h3>
+                    <p class="text-sm text-gray-300 mb-2">The foundation of ultra training. Focus on **time on feet** (TOF) and perfecting your race-day logistics.</p>
+                    <div class="option-box bg-indigo-800/30 border-indigo-700/50">
+                        <p class="option-title text-indigo-100">
+                            <span class="mr-2 text-base">👣</span> Option A: Classic Time on Feet
+                        </p>
+                        <p class="option-detail">Sustained, easy pace (RPE 3-4/10). Focus entirely on staying **slow** and practicing **nutrition and hydration** every 30-45 minutes.</p>
+                        <p class="option-title text-indigo-100 mt-3">
+                            <span class="mr-2 text-base">🔄</span> Option B: Back-to-Back (B2B) Prep
+                        </p>
+                        <p class="option-detail">Run two long, easy efforts on consecutive days (e.g., 3 hrs Sat + 2 hrs Sun). Simulates race-day fatigue.</p>
+                    </div>
+                    <span class="priority-tag bg-indigo-500 mt-4">PRIORITY</span>
                 </div>
-                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
-                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">2. The Mental Scan</h3>
-                    <p class="text-sm text-gray-200">Am I burnt out, stressed, or dreading the run? If so, <b>cut the run in half</b> or change it to a fun, low-impact activity.</p>
+
+                <!-- Threshold Run -->
+                <div class="workout-card bg-purple-900/30 border border-purple-400/50">
+                    <h3 class="font-bold text-xl text-purple-300 flex items-center mb-2">
+                        <span class="mr-2 text-2xl">💨</span> Threshold Run (Speed-Endurance)
+                    </h3>
+                    <p class="text-sm text-gray-300 mb-2">Sustained effort at your 'comfortably hard' pace (Zone 3 / Marathon effort). Improves lactate clearance.</p>
+                    <div class="option-box bg-purple-800/30 border-purple-700/50">
+                        <p class="option-title text-purple-100">
+                            <span class="mr-2 text-base">⏱️</span> Option A: Classic Tempo
+                        </p>
+                        <p class="option-detail">After a warm-up, run 20-40 minutes continuously at Threshold pace. Builds mental and physical toughness.</p>
+                        <p class="option-title text-purple-100 mt-3">
+                            <span class="mr-2 text-base">⚙️</span> Option B: Cruise Intervals
+                        </p>
+                        <p class="option-detail">3-5 repetitions of (6-10 minutes @ Threshold pace) with short rest (1-2 minutes). Allows for more total time at pace.</p>
+                    </div>
+                    <span class="priority-tag bg-purple-500 mt-4">PRIORITY</span>
                 </div>
-                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-yellow-500">
-                    <h3 class="text-xl font-semibold text-yellow-300 mb-2">3. The Hunger Scan</h3>
-                    <p class="text-sm text-gray-200">Am I well-fueled and rested? If running on fumes, a hard effort will do more harm. Choose an <b>Easy Run or Rest</b> instead.</p>
+
+                <!-- Hill/Vert Focus with Options (Existing) -->
+                <div class="workout-card bg-red-900/30 border border-red-400/50">
+                    <h3 class="font-bold text-xl text-red-300 flex items-center mb-2">
+                        <span class="mr-2 text-2xl">⛰️</span> Hill/Vert Focus (Power & Endurance)
+                    </h3>
+                    <p class="text-sm text-gray-300 mb-2">Essential for mountain/hilly ultras. Select based on whether you need turnover or sustained climbing strength.</p>
+                    <div class="option-box bg-red-800/30 border-red-700/50">
+                        <p class="option-title text-red-100">
+                            <span class="mr-2 text-base">🚀</span> Option A: Hill Repeats (Power)
+                        </p>
+                        <p class="option-detail">6-10x (30-60 sec **hard up**, walk/jog down recovery). Focus on turnover and drive.</p>
+                        <p class="option-title text-red-100 mt-3">
+                            <span class="mr-2 text-base">🏔️</span> Option B: Long Climb (Endurance)
+                        </p>
+                        <p class="option-detail">30+ min sustained climb @ **RPE 6/10** (steady run/power hike). Builds specific climbing endurance.</p>
+                    </div>
+                    <span class="vert-tag bg-red-500 mt-4">VERT FOCUS</span>
                 </div>
+
+                <!-- Fun Run -->
+                <div class="workout-card bg-cyan-900/30 border border-cyan-400/50">
+                    <h3 class="font-bold text-xl text-cyan-300 flex items-center mb-2">
+                        <span class="mr-2 text-2xl">😊</span> Fun Run / Easy Jog (Adaptable Volume)
+                    </h3>
+                    <p class="text-sm text-gray-300 mb-2">The flexible run. Listen to your body and choose the intensity/duration that best supports your recovery.</p>
+                    <div class="option-box bg-cyan-800/30 border-cyan-700/50">
+                        <p class="option-title text-cyan-100">
+                            <span class="mr-2 text-base">🧘</span> Option A: True Recovery
+                        </p>
+                        <p class="option-detail">Very short (20-30 minutes), very slow (RPE 2/10). Use this to flush legs after a hard day, or when energy is low.</p>
+                        <p class="option-title text-cyan-100 mt-3">
+                            <span class="mr-2 text-base">🏃</span> Option B: Foundational Volume
+                        </p>
+                        <p class="option-detail">Moderate length (45-90 minutes), easy pace (RPE 3/10). Used for building overall weekly volume in a low-stress manner.</p>
+                    </div>
+                    <span class="flexible-tag bg-cyan-500 mt-4">FLEXIBLE</span>
+                </div>
+
             </div>
         </section>
 
-        <!-- Section 1.5: Key Workouts Explained -->
-        <section id="key-workouts" class="container-bg p-6 md:p-8 rounded-xl">
-            <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
-                <span class="mr-3 text-2xl">⚡</span> Key Workouts Explained: Specific Efforts
-            </h2>
-            <p class="mb-6 text-gray-300">These two workouts are the performance-building pillars of your plan. Treat them as non-negotiable in the week's intention, but <b>always</b> adjust the duration/intensity based on your Daily System Check.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Threshold Run Details -->
-                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-indigo-500">
-                    <h3 class="text-xl font-semibold text-indigo-300 mb-2">1. The Threshold Run (Sustained Pace)</h3>
-                    <p class="text-sm text-gray-200 mb-3">Goal: Improve your ability to sustain a hard effort for long periods without accumulating excessive fatigue. This pace is <b>Comfortably Hard</b> (Zone 3/4).</p>
-                    
-                    <div class="space-y-3 mt-4">
-                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-indigo-400">
-                            <span class="text-lg mr-3">🔥</span>
-                            <div>
-                                <p class="font-medium text-white text-sm">Intensity Check</p>
-                                <p class="text-xs text-gray-300">You can speak <b>3-4 words at a time</b>, but not full sentences.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-indigo-400">
-                            <span class="text-lg mr-3">⏱️</span>
-                            <div>
-                                <p class="font-medium text-white text-sm">Example Structure (90 min)</p>
-                                <p class="text-xs text-gray-300">Warmup &rarr; <b>2 x 20 min @ Threshold</b> (5 min recovery) &rarr; Cooldown.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Hill/Vert Focus Details -->
-                <div class="p-4 rounded-lg bg-gray-700/50 border-t-4 border-amber-500">
-                    <h3 class="text-xl font-semibold text-amber-300 mb-2">2. Hill/Vert Focus (Strength & Power)</h3>
-                    <p class="text-sm text-gray-200 mb-3">Goal: Build leg strength and power specific to ultra-running, which translates to efficiency and resilience on climbs.</p>
-                    
-                    <div class="space-y-3 mt-4">
-                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-amber-400">
-                            <span class="text-lg mr-3">🚀</span>
-                            <div>
-                                <p class="font-medium text-white text-sm">Option A: Hill Repeats (Power)</p>
-                                <p class="text-xs text-gray-300"><b>6-10x</b> (60-90 sec hard up, walk/jog down recovery).</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-2 bg-gray-800 rounded-lg border-l-4 border-amber-400">
-                            <span class="text-lg mr-3">🏔️</span>
-                            <div>
-                                <p class="font-medium text-white text-sm">Option B: Long Climb (Endurance)</p>
-                                <p class="text-xs text-gray-300"><b>30+ min</b> sustained climb @ RPE 6/10 (steady run/power hike).</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
+
         <!-- Section 2: 8-Week Training Calendar -->
         <section id="training-calendar" class="container-bg p-6 md:p-8 rounded-xl">
             <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
-                <span class="mr-3 text-2xl">🗓️</span> 8-Week Core Training Guide
+                <span class="mr-3 text-3xl">🗓️</span> 3. 8-Week Core Training Template
             </h2>
-            <p class="mb-6 text-gray-300">This is your structured guide. Let your Daily System Check determine which intensity level to pursue each day within the weekly intention. <b>Remember Pre-Run Activation before every run!</b></p>
+            <p class="mb-6 text-gray-300">This is your structured guide. Check off tasks as you complete them! </p>
             
             <div class="overflow-x-auto">
                 <div class="min-w-full grid calendar-grid text-sm">
                     <!-- Table Header -->
-                    <div class="grid calendar-row-mobile-stack bg-gray-700/70 font-semibold p-2 rounded-t-lg sticky top-0 z-10">
+                    <div class="grid calendar-row-mobile-stack bg-gray-700/70 font-bold p-3 rounded-t-lg sticky top-0 z-10 text-lg">
                         <div class="p-2">Week</div>
-                        <div class="p-2">Primary Focus & Effort</div>
-                        <div class="p-2">Weekly Intentions (6 Active Days)</div>
+                        <div class="p-2">Focus & Effort</div>
+                        <div class="p-2">Weekly Intentions (Click to Check Off)</div>
                     </div>
                     
                     <!-- Calendar Rows -->
-                    <!-- Week 1 -->
+                    <!-- Week 1 (Strength Split) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Nov 18 - Nov 24</div>
-                        <div class="p-2 text-yellow-400">Base Consistency (Low-Medium)</div>
+                        <div class="p-2 text-yellow-400">Base Consistency 🏃‍♀️</div>
                         <div data-week="W1" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W1-L1" class="task-checkbox">
@@ -208,50 +256,74 @@
                                 <input type="checkbox" data-task-id="W1-F1" class="task-checkbox">
                                 <span class="flexible-tag">3-4 Fun Runs (20-90 min)</span>
                             </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W1-SL" class="task-checkbox">
+                                <span class="strength-tag">💪 1 Lower Body Strength</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W1-SU" class="task-checkbox">
+                                <span class="strength-tag">🏋️ 1 Upper Body Strength</span>
+                            </label>
                         </div>
                     </div>
-                    <!-- Week 2 -->
+                    <!-- Week 2 (Strength Split + Hill/Vert) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Nov 25 - Dec 1</div>
-                        <div class="p-2 text-green-400">Volume & Strength (Medium)</div>
+                        <div class="p-2 text-green-400">Volume & Vert Build 📈</div>
                         <div data-week="W2" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W2-L1" class="task-checkbox">
-                                <span class="priority-tag">⛰️ 1 Long Run (4-5 hrs)</span>
+                                <span class="priority-tag">1 Long Run (4-5 hrs)</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W2-H1" class="task-checkbox">
-                                <span class="priority-tag">⛰️ 1 Hill/Vert Focus (1-2 hrs)</span>
+                                <span class="vert-tag">⛰️ 1 Hill/Vert Focus (1-2 hrs)</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W2-F1" class="task-checkbox">
                                 <span class="flexible-tag">3-4 Fun Runs (20-90 min)</span>
                             </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W2-SL" class="task-checkbox">
+                                <span class="strength-tag">💪 1 Lower Body Strength</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W2-SU" class="task-checkbox">
+                                <span class="strength-tag">🏋️ 1 Upper Body Strength</span>
+                            </label>
                         </div>
                     </div>
-                    <!-- Week 3 (Peak) -->
+                    <!-- Week 3 (Peak - Lower Body Focus + Hill/Vert) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
                         <div class="p-2 font-medium">Dec 2 - Dec 8</div>
-                        <div class="p-2 text-red-400 font-bold">High Volume Peak (Medium-High)</div>
+                        <div class="p-2 text-red-400 font-bold">Peak Volume 🔥</div>
                         <div data-week="W3" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W3-L1" class="task-checkbox">
-                                <span class="priority-tag">⛰️ 1 Long Run (5+ hrs or B2B)</span>
+                                <span class="priority-tag">1 Long Run (5+ hrs or B2B)</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W3-H1" class="task-checkbox">
+                                <span class="vert-tag">⛰️ 1 Hill/Vert Focus (1-2 hrs)</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W3-T1" class="task-checkbox">
-                                <span class="priority-tag">🏃 1 Threshold Run (90-120)</span>
+                                <span class="priority-tag">1 Threshold Run (90-120)</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W3-F1" class="task-checkbox">
-                                <span class="flexible-tag">3-4 Fun Runs (20-90 min)</span>
+                                <span class="flexible-tag">3 Fun Runs (20-90 min)</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W3-SL" class="task-checkbox">
+                                <span class="strength-tag">💪 1 Lower Body Strength</span>
                             </label>
                         </div>
                     </div>
                     <!-- Week 4 (Pre-Taper) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 9 - Dec 15</div>
-                        <div class="p-2 text-yellow-400">Pre-Race Taper (Low-Medium)</div>
+                        <div class="p-2 text-yellow-400">Pre-Race Taper ✂️</div>
                         <div data-week="W4" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W4-L1" class="task-checkbox">
@@ -261,15 +333,14 @@
                                 <input type="checkbox" data-task-id="W4-E1" class="task-checkbox">
                                 <span class="flexible-tag">2-3 Easy Jogs</span>
                             </label>
-                            <p class="mt-2 text-xs text-gray-400">🔪 Volume Cut by 20-30%</p>
+                            <p class="mt-2 text-xs text-gray-400">Volume Cut by 20-30%.</p>
                         </div>
                     </div>
                     <!-- Week 5 (Tune-Up Race) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 16 - Dec 22</div>
-                        <div class="p-2 text-blue-400 font-bold">TUNE-UP RACE WEEK</div>
+                        <div class="p-2 text-blue-400 font-bold">TUNE-UP RACE WEEK 🏁</div>
                         <div data-week="W5" class="p-2 weekly-intentions week-list text-xs flex flex-col gap-1">
-                            <!-- This week uses flex-col which already forces stacking -->
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W5-M1" class="task-checkbox">
                                 <strong>Mon/Tue:</strong> <span class="priority-tag">Short Strides</span>
@@ -280,34 +351,38 @@
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W5-R1" class="task-checkbox">
-                                <strong>Sat:</strong> <span class="priority-tag">TUNE-UP RACE</span>
+                                <strong>Sat:</strong> <span class="priority-tag">TUNE-UP RACE!</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W5-R2" class="task-checkbox">
-                                <strong>Sun:</strong> <span class="flexible-tag">Full Rest</span>
+                                <strong>Sun:</strong> <span class="flexible-tag">Full Rest Day</span>
                             </label>
                         </div>
                     </div>
                     <!-- Week 6 (Recovery) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 23 - Dec 29</div>
-                        <div class="p-2 text-yellow-400">Recovery & Reset (Very Low)</div>
+                        <div class="p-2 text-yellow-400">Recovery & Reset 🛌</div>
                         <div data-week="W6" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W6-E1" class="task-checkbox">
                                 <span class="flexible-tag">3-4 Very Easy Jogs</span>
                             </label>
-                            <p class="mt-2 text-xs text-gray-400">🧘 Volume Cut by 40-50%. Priority: Sleep.</p>
+                            <p class="mt-2 text-xs text-gray-400">Volume Cut by 40-50%. Priority: Sleep.</p>
                         </div>
                     </div>
-                    <!-- Week 7 (Rebound) -->
+                    <!-- Week 7 (Rebound - Lower Body Focus + Hill/Vert) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150">
                         <div class="p-2 font-medium">Dec 30 - Jan 5</div>
-                        <div class="p-2 text-green-400">Final Build/Rebound (Medium)</div>
+                        <div class="p-2 text-green-400">Final Build/Rebound 🟢</div>
                         <div data-week="W7" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W7-L1" class="task-checkbox">
-                                <span class="priority-tag">🏃 Last Long Run (3-4 hrs)</span>
+                                <span class="priority-tag">1 Last Long Run (3-4 hrs)</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W7-H1" class="task-checkbox">
+                                <span class="vert-tag">⛰️ 1 Hill/Vert Focus (1 hour)</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W7-T1" class="task-checkbox">
@@ -315,31 +390,34 @@
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W7-F1" class="task-checkbox">
-                                <span class="flexible-tag">3-4 Easy/Fun Runs (20-90 min)</span>
+                                <span class="flexible-tag">3 Easy/Fun Runs (20-90 min)</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" data-task-id="W7-SL" class="task-checkbox">
+                                <span class="strength-tag">💪 1 Lower Body Strength</span>
                             </label>
                         </div>
                     </div>
                     <!-- Week 8 (Race Taper) -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-gray-900/50">
                         <div class="p-2 font-medium">Jan 6 - Jan 12</div>
-                        <div class="p-2 text-red-400 font-bold">Taper - Volume Drop (Low)</div>
+                        <div class="p-2 text-red-400 font-bold">Final Taper 🛑</div>
                         <div data-week="W8" class="p-2 weekly-intentions flex flex-wrap gap-1">
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="W8-E1" class="task-checkbox">
                                 <span class="flexible-tag">4-5 Very Short Jogs (20-40min)</span>
                             </label>
-                            <p class="mt-2 text-xs text-gray-400">🔪 Volume Cut by 60%</p>
+                            <p class="mt-2 text-xs text-gray-400">Volume Cut by 60%.</p>
                         </div>
                     </div>
                      <!-- Race Week -->
                     <div class="grid calendar-row-mobile-stack border-b border-gray-600/50 p-2 items-start hover:bg-gray-700/50 transition duration-150 bg-blue-900/50">
                         <div class="p-2 font-medium">Jan 13 - Jan 19</div>
-                        <div class="p-2 text-white font-bold">RACE WEEK (Jan 18)</div>
+                        <div class="p-2 text-white font-bold">RACE WEEK! 🎉</div>
                         <div data-week="RW" class="p-2 weekly-intentions week-list text-xs flex flex-col gap-1">
-                            <!-- This week uses flex-col which already forces stacking -->
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="RW-M1" class="task-checkbox">
-                                <strong>Mon/Wed:</strong> <span class="flexible-tag">20-min jog + 4 quick strides</span>
+                                <strong>Mon/Tue:</strong> <span class="flexible-tag">20-min jog + 4 quick strides</span>
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="RW-T1" class="task-checkbox">
@@ -351,26 +429,24 @@
                             </label>
                             <label class="task-item">
                                 <input type="checkbox" data-task-id="RW-R1" class="task-checkbox">
-                                <strong>Sat:</strong> <span class="priority-tag">AAA RACE!</span>
+                                <span class="priority-tag bg-green-500">AAA RACE! Go get it!</span>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Section 3 & 4 (omitted for brevity, assume they are present) -->
         
     </main>
 
     <footer class="mt-12 text-center text-gray-500 text-sm">
-        &copy; Vibe Code with Gemini by Kent | Built with Tailwind CSS
+        &copy; 2025 Intuitive Ultra Training | Use the checkboxes to track your progress locally.
     </footer>
 
     <!-- LOCAL STORAGE APPLICATION LOGIC -->
     <script>
-        // Use a descriptive key for localStorage to avoid conflicts
-        const STORAGE_KEY = 'ultraPlanProgress_v3_robust'; 
+        // Updated key to reflect the latest version
+        const STORAGE_KEY = 'ultraPlanProgress_v7'; 
         let progressData = {}; 
 
         /**
